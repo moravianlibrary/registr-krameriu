@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>RegistrKrameriu</title>
+  <title>Regist Krameriu</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0, user-scalable=no">    
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
+  <%= render 'layouts/header' %>
+  
+  <div class="container" style="min-height:100%;position:relative;">
+    <div style="margin: 0 0 60px;">
+      <% flash.each do |message_type, message| %>
+        <div class="flash flash-<%= message_type %>"><%= message %></div>
+      <% end %>
+      <%= yield %>  
+    </div>    
+          
+  </div>
 
 </body>
 </html>
