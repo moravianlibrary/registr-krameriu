@@ -1,9 +1,9 @@
-<p id="notice"><%= notice %></p>
 <div class="rk-list">
 
 <table>
   <thead>
-    <tr>
+    <tr>      
+      <th>Logo</th>
       <th>Stav</th>
       <th>Název</th>
       <!--
@@ -19,6 +19,13 @@
   <tbody>
     <% @libraries.each do |library| %>
       <tr class='<%= cycle("odd", "even") %>'>
+        
+         <td>
+          <% if Rails.application.assets.find_asset("logo_#{library.code}.png") %>
+          <%= image_tag("logo_#{library.code}.png", size: "20x20", alt: "logo") %>
+          <% end %>
+        </td>
+
         <td>
           <% if library.version && (library.version.start_with?("5.2") || library.version.start_with?("5.1.1")) %>
             <% if library.recommended_public.nil? || library.recommended_public == 0 || library.documents_public.nil? || library.documents_public == 0%>
@@ -30,11 +37,12 @@
             <%= image_tag("ic_not_ok.png", size: "16x16", alt: "NOT OK") %>
           <% end %>
         </td>
+       
         <td><%= library.name %></td>
         <!--<td><%= library.code %></td>
         <td><%= library.url %></td>
         <td><%= library.email %></td>-->
-        <td class="<%= "rk-text-warn"  if !(library.version.start_with?("5.2") || library.version.start_with?("5.1.1")) %>">
+        <td class="<%= "rk-text-warn"  if library.version.nil? || !(library.version.start_with?("5.2") || library.version.start_with?("5.1.1")) %>">
           <%= library.version %>
         </td>
         

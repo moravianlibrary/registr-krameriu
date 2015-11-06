@@ -1,4 +1,3 @@
-<p id="notice"><%= notice %></p>
 
 <p>
   <strong>Název:</strong>
@@ -51,7 +50,7 @@
 </div>
 
 
-<%= link_to 'Edit', edit_library_path(@library) %> |
-<%= link_to 'Destroy', @library, method: :delete, data: { confirm: 'Are you sure?' } %> |
-<%= link_to 'Back', libraries_path %>
+<%= link_to 'Upravit', edit_library_path(@library) %> |
+<%= link_to 'Smazat', @library, method: :delete, data: { confirm: 'Opravdu chcete knihovnu smazat?' } %> |
+<%= link_to 'Zpět', libraries_path %>
 

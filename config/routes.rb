@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   get 'feeder/' => 'feeder#all'
   get 'feeder/:code' => 'feeder#library'
+  get 'ping/' => 'feeder#ping'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

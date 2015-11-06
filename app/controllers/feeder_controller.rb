@@ -10,10 +10,11 @@ class FeederController < ApplicationController
 	  code = params[:code]
 	  library = Library.find_by(code: code)
 	  if library.nil?
-	  	render :text => "library with code #{code} not found",:content_type => "text/plain"
+	  	render :text => "library with code #{code} not found",:content_type => "text/plain"	  	
 	  else
 	    update_library(library)
-	    render :text => "ok",:content_type => "text/plain"
+	    redirect_to library, notice: 'Načtení dat dokončeno'
+	    ##render :text => "ok",:content_type => "text/plain"
 	  end    
 	end
 
@@ -21,6 +22,11 @@ class FeederController < ApplicationController
 		Library.all.each do |library|
 			update_library(library)
 		end
+		#render :text => "ok",:content_type => "text/plain"
+		redirect_to libraries_path, notice: 'Načtení dat dokončeno'
+	end
+
+	def ping
 		render :text => "ok",:content_type => "text/plain"
 	end
 
