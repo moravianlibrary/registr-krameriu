@@ -52,5 +52,5 @@
 
 <%= link_to 'Upravit', edit_library_path(@library) %> |
 <%= link_to 'Smazat', @library, method: :delete, data: { confirm: 'Opravdu chcete knihovnu smazat?' } %> |
-<%= link_to 'Zpět', libraries_path %>
-
+<%= link_to 'Zpět', libraries_path %> |
+<%= link_to 'Obnovit', "/feeder/#{@library.code}" %>
