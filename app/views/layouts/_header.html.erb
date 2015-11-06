@@ -30,15 +30,15 @@
 
 <script>
 $('#menu-refresh').click(function() { 
-            $('#menu-refresh').hide();
-            $('#menu-loader').show();
+            //$('#menu-refresh').hide();
+            //$('#menu-loader').show();
             $.ajax({
                 url: '/feeder/',
                 type: 'GET',
                 timeout: 120000,
                 success: function (result) {                  
-                  $('#menu-refresh').show();
-                  $('#menu-loader').hide();            
+                  //$('#menu-refresh').show();
+                  //$('#menu-loader').hide();            
                 }
             });  
 

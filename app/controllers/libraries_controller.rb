@@ -5,6 +5,9 @@ class LibrariesController < ApplicationController
   # GET /libraries.json
   def index
     @libraries = Library.all
+    @last_update = nil
+    helper = Helper.first
+    @last_update = helper.last_update if helper
   end
 
   # GET /libraries/1

@@ -22,6 +22,8 @@ class FeederController < ApplicationController
 		Library.all.each do |library|
 			update_library(library)
 		end
+		Helper.destroy_all
+		Helper.create(last_update:Time.now)
 		render :text => "ok",:content_type => "text/plain"
 		#redirect_to libraries_path, notice: 'Načtení dat dokončeno'
 	end
