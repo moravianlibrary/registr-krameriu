@@ -22,8 +22,8 @@ class FeederController < ApplicationController
 		Library.all.each do |library|
 			update_library(library)
 		end
-		#render :text => "ok",:content_type => "text/plain"
-		redirect_to libraries_path, notice: 'Načtení dat dokončeno'
+		render :text => "ok",:content_type => "text/plain"
+		#redirect_to libraries_path, notice: 'Načtení dat dokončeno'
 	end
 
 	def ping

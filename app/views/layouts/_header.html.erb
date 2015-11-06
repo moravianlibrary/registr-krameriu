@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
         </button>
 
-        <%= link_to "Registr Krameriu", root_path, id: "rk-logo" %>
+        <%= link_to "Registr Krameriů", root_path, id: "rk-logo" %>
 
 
       </div>
@@ -17,10 +17,31 @@
         <ul class="nav navbar-nav navbar-right">
          
           <li>
-            <%= link_to 'Obnovit', "/feeder/" %>
+            <a href="#" id="menu-refresh" style="float:left;">Obnovit</a>
+            <div id="menu-loader" style="float:left;padding-top:10px;display:none;">
+              <%= image_tag("loader.gif", size: "30x30", alt: "loading") %>
+            </div>
           </li>
         </ul>
       </div>
     </div>
   </div>
 </nav>
+
+<script>
+$('#menu-refresh').click(function() { 
+            $('#menu-refresh').hide();
+            $('#menu-loader').show();
+            $.ajax({
+                url: '/feeder/',
+                type: 'GET',
+                success: function (result) {                  
+                  $('#menu-refresh').show();
+                  $('#menu-loader').hide();            
+                }
+            });  
+
+    });
+
+
+</script>
