@@ -35,6 +35,7 @@ $('#menu-refresh').click(function() {
             $.ajax({
                 url: '/feeder/',
                 type: 'GET',
+                timeout: 120000,
                 success: function (result) {                  
                   $('#menu-refresh').show();
                   $('#menu-loader').hide();            
