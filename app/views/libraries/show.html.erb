@@ -1,0 +1,57 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Název:</strong>
+  <%= @library.name %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @library.code %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @library.url %>
+</p>
+
+<p>
+  <strong>Verze:</strong>
+  <%= @library.version %>
+</p>
+
+<p>
+  <strong>Vybané (veřejné/všechny):</strong>
+  <td><%= "#{@library.recommended_public}/#{@library.recommended}" %></td>
+</p>
+<p>
+  <strong>Počet dokumentů (veřejné/všechny):</strong>
+  <td><%= "#{@library.documents_public}/#{@library.documents_all}" %></td>
+</p>
+
+
+<p>
+  <strong>Email:</strong>
+  <%= @library.email %>
+</p>
+<p>
+  <strong>PDF Max Range:</strong>
+  <%= @library.pdf_max %>
+</p>
+
+<strong>Intro:</strong>
+<div class="rk-box" style="margin-top:5px;margin-bottom:20px;">
+  <%= @library.intro.html_safe if @library.intro %>
+</p>
+</div>
+
+<strong>Right Message:</strong>
+<div class="rk-box" style="margin-top:5px;margin-bottom:20px;">
+  <%= @library.right_msg.html_safe if @library.right_msg %>
+</div>
+
+
+<%= link_to 'Edit', edit_library_path(@library) %> |
+<%= link_to 'Destroy', @library, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to 'Back', libraries_path %>
+

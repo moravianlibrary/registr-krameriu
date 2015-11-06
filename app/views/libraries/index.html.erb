@@ -1,0 +1,62 @@
+<p id="notice"><%= notice %></p>
+<div class="rk-list">
+
+<table>
+  <thead>
+    <tr>
+      <th>Stav</th>
+      <th>Název</th>
+      <!--
+      <th>Code</th>
+      <th>Url</th>      
+      <th>Email</th>-->
+      <th>Verze</th>
+      <th class="rk-center" colspan="2">Vybrané</th>
+      <th class="rk-center" colspan="2">Dokumenty</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @libraries.each do |library| %>
+      <tr class='<%= cycle("odd", "even") %>'>
+        <td>
+          <% if library.version && (library.version.start_with?("5.2") || library.version.start_with?("5.1.1")) %>
+            <% if library.recommended_public.nil? || library.recommended_public == 0 || library.documents_public.nil? || library.documents_public == 0%>
+              <%= image_tag("ic_ok_green.png", size: "16x16", alt: "OK") %>
+            <% else %>
+              <%= image_tag("ic_ok.png", size: "16x16", alt: "OK?") %>
+            <% end %>
+          <% else %>
+            <%= image_tag("ic_not_ok.png", size: "16x16", alt: "NOT OK") %>
+          <% end %>
+        </td>
+        <td><%= library.name %></td>
+        <!--<td><%= library.code %></td>
+        <td><%= library.url %></td>
+        <td><%= library.email %></td>-->
+        <td class="<%= "rk-text-warn"  if !(library.version.start_with?("5.2") || library.version.start_with?("5.1.1")) %>">
+          <%= library.version %>
+        </td>
+        
+        <td class="rk-right <%= "rk-text-warn" if library.recommended_public.nil? || library.recommended_public == 0 %>">
+          <strong><%= library.recommended_public || "?" %>
+        </td>
+        <td class="<%= "rk-text-warn" if library.recommended.nil? || library.recommended == 0 %>">
+          <%= library.recommended || "?" %>
+        </td>
+        <td class="rk-right <%= "rk-text-warn" if library.documents_public.nil? || library.documents_public == 0 %>">
+          <strong><%= library.documents_public || "?" %> </strong>
+        </td>
+        <td class="<%= "rk-text-warn" if library.documents_all.nil? || library.documents_all == 0 %>">
+          <%= library.documents_all || "?" %>
+        </td>
+        <td><%= link_to 'Detail', library %> | <a href="<%= library.client_url %>">Klient</a></td>  
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Add Library', new_library_path %>
+</div>
