@@ -1,3 +1,21 @@
+<div class="rk-detail">
+	
+	<div class="rk-header">
+		<% if Rails.application.assets.find_asset("logo_#{@library.code}.png") %>                    
+			<div class="rk-icon">
+				<%= image_tag("logo_#{@library.code}.png", size: "55x55", alt: "logo") %>
+			</div>
+		<% end %>
+
+		<div>
+			<div class="rk-name">
+				<%= @library.name %>
+			</div>
+			<div class="rk-url">
+				<a href="<%= @library.url %>"><%= @library.url %></a>
+			</div>
+		</div>
+	</div>
 
 <p>
   <strong>Název:</strong>
@@ -54,3 +72,5 @@
 <%= link_to 'Smazat', @library, method: :delete, data: { confirm: 'Opravdu chcete knihovnu smazat?' } %> |
 <%= link_to 'Zpět', libraries_path %> |
 <%= link_to 'Obnovit', "/feeder/#{@library.code}" %>
+
+</div>

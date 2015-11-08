@@ -1,9 +1,15 @@
 <div class="rk-list">
 
+<div class="rk-note">
+
+Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupňujících <strong><%= @documents_all %></strong> dokumentů (z toho <strong><%= @documents_public %></strong> veřejných).
+
+</div>
+
 <table>
   <thead>
     <tr>      
-      <th>Logo</th>
+      <th></th>
       <th>Stav</th>
       <th>Název</th>
       <!--
@@ -13,6 +19,7 @@
       <th>Verze</th>
       <th class="rk-center" colspan="2">Vybrané</th>
       <th class="rk-center" colspan="2">Dokumenty</th>
+      <th></th>
     </tr>
   </thead>
 
@@ -58,7 +65,7 @@
         <td class="<%= "rk-text-warn" if library.documents_all.nil? || library.documents_all == 0 %>">
           <%= library.documents_all || "?" %>
         </td>
-        <td><%= link_to 'Detail', library %> | <a href="<%= library.client_url %>">Klient</a></td>  
+        <td class="rk-right"><%= link_to 'Detail', library %> | <a href="<%= library.client_url %>">Klient</a></td>  
       </tr>
     <% end %>
   </tbody>

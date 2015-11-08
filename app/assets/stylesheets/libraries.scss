@@ -1,9 +1,21 @@
+@import "custom";
 
 .rk-list {
+	.rk-note {
+		margin-bottom: 15px;
+		margin-top: 8px;
+	}
 	table {
 		width:100%;		
-		th {
-			padding-bottom: 5px;
+		thead {			
+			background-color: $color-primary;
+    	font-size: 14px;
+    	color: #fff;
+    	th {
+    		padding-top: 5px;
+    		padding-bottom: 5px;
+    		font-weight: 300;
+    	}
 		}
 		tr {
 			&.even {
@@ -25,5 +37,25 @@
 		.rk-right {
 			text-align: right;
 		}		
+	}
+}
+
+
+
+.rk-detail {
+	.rk-header {
+		margin-top: 10px;
+		margin-bottom: 15px;
+		overflow: hidden;
+		.rk-icon {
+			float: left;
+			padding-right: 15px;
+		}
+		.rk-name {
+			font-size: 21px;
+		}
+		.rk-url {
+
+		}
 	}
 }

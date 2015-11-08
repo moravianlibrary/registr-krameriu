@@ -6,6 +6,8 @@ class LibrariesController < ApplicationController
   def index
     @libraries = Library.all
     @last_update = nil
+    @documents_all = Library.sum_of_all_documents
+    @documents_public = Library.sum_of_public_documents
     helper = Helper.first
     @last_update = helper.last_update if helper
   end
