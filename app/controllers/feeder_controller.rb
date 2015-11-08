@@ -46,9 +46,11 @@ class FeederController < ApplicationController
 				library.pdf_max = info["pdfMaxRange"]
 			else
 				t = get_text(base_url)
-				vv = t.match(/version: (.*), /)
-				if vv
-					library.version = vv[1]
+				if t
+					vv = t.match(/version: (.*), /)
+					if vv
+						library.version = vv[1]
+					end
 				end
 			end
 
@@ -93,13 +95,18 @@ class FeederController < ApplicationController
 			puts url
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
+			http.read_timeout = 10
 			if uri.scheme == "https"
 				http.use_ssl = true
 				http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 			end			
 			request = Net::HTTP::Get.new(uri, initheader = {'Content-Type' =>'application/json', 'Accept' =>'application/json'})
-			response = http.request(request)
-			response.body
+			begin
+				response = http.request(request)
+				response.body
+			rescue
+				nil
+			end
 		end
 
 
