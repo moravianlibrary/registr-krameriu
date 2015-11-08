@@ -1,7 +1,7 @@
 class Library < ActiveRecord::Base
 
 
-  #default_scope  { order(:id => :asc) }
+  default_scope  { order(:id => :asc) }
 	#default_scope  { order(:version => :desc) }
 
 
