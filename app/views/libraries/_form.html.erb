@@ -12,18 +12,18 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.label :name, "Název" %><br>
+    <%= f.text_field :name, class: 'form-control' %>
   </div>
   <div class="field">
-    <%= f.label :code %><br>
-    <%= f.text_field :code %>
+    <%= f.label :code, "Kód" %><br>
+    <%= f.text_field :code, class: 'form-control' %>
   </div>
   <div class="field">
     <%= f.label :url %><br>
-    <%= f.text_field :url %>
+    <%= f.text_field :url, class: 'form-control' %>
   </div> 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Potvrdit", class: "btn-primary rk-btn" %>
   </div>
 <% end %>

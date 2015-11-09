@@ -37,6 +37,21 @@ $brand-danger:          #d9534f !default;
   }
 }
 
+.flash {
+  padding: 5px;
+  color: #000;
+}
+.flash-notice {      
+  background-color: #A7DABD;
+}
+.flash-alert {      
+  background-color: #F9B3B3;
+}
+
+
+.rk-btn {
+  padding: 5px;
+}
 
 body {
   padding-top: 60px;

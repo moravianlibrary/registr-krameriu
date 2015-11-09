@@ -16,18 +16,28 @@
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
          
-          <li>
-            <a href="#" id="menu-refresh" style="float:left;">Obnovit</a>
-            <div id="menu-loader" style="float:left;padding-top:10px;display:none;">
-              <%= image_tag("loader.gif", size: "30x30", alt: "loading") %>
-            </div>
-          </li>
+          <% if logged_in? %>
+            <li>
+              <a href="#" id="menu-refresh" style="float:left;">Obnovit</a>
+              <div id="menu-loader" style="float:left;padding-top:10px;display:none;">
+                <%= image_tag("loader.gif", size: "30x30", alt: "loading") %>
+              </div>
+            </li>
+            <li>
+              <%= link_to "Odhlásit", logout_path %>          
+            </li>  
+          <% else %>
+            <li>
+              <%= link_to "Přihlásit", login_path %>          
+            </li>
+          <% end %>
         </ul>
       </div>
     </div>
   </div>
 </nav>
 
+<% if logged_in? %>
 <script>
 $('#menu-refresh').click(function() { 
             //$('#menu-refresh').hide();
@@ -43,6 +53,5 @@ $('#menu-refresh').click(function() {
             });  
 
     });
-
-
 </script>
+<% end %>

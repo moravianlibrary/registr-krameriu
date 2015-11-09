@@ -73,11 +73,12 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
 
 <br>
 
-<div style="float:left;">
-<%= link_to 'Přidat Krameria', new_library_path %>
-</div>
-<div style="float:right;">
-Posledni obnova <%= @last_update%>
-</div>
-
+  <% if logged_in? %>
+    <div style="float:left;">
+      <%= link_to 'Přidat Krameria', new_library_path %>
+    </div>
+  <% end %>
+  <div style="float:right;">
+    Posledni obnova <%= @last_update%>
+  </div>
 </div>

@@ -5,12 +5,13 @@ class Library < ActiveRecord::Base
 	#default_scope  { order(:version => :desc) }
 
 
-
-
 	def client_url 
 		"http://janrychtar.cz/kramerius/#/#{code}/"
 	end
 
+	def home_url 
+		"#{url}search/"
+	end
 
 	#static methods
 	def self.sum_of_all_documents

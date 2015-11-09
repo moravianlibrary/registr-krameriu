@@ -1,0 +1,22 @@
+
+<div class="row" style="margin-top:50px;">
+<div class="col-sm-6 col-sm-offset-3">
+
+<%= form_for(:user, url: sessions_path) do |f| %>
+
+
+  <div class="field">
+    <%= f.label :login, "Email" %><br>
+    <%= f.text_field :login, class: 'form-control' %>
+  </div>
+  <div class="field">
+    <%= f.label :password, "Heslo" %><br>
+    <%= f.password_field :password, class: 'form-control' %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Přihlásit", class: "btn-primary rk-btn" %>
+  </div>
+<% end %>
+
+</div>
+</div>

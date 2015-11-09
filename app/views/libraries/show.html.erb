@@ -12,7 +12,7 @@
 				<%= @library.name %>
 			</div>
 			<div class="rk-url">
-				<a href="<%= @library.url %>"><%= @library.url %></a>
+				<a href="<%= @library.home_url %>"><%= @library.home_url %></a>
 			</div>
 		</div>
 	</div>
@@ -29,7 +29,7 @@
 
 <p>
   <strong>Url:</strong>
-  <%= @library.url %>
+  <%= @library.home_url %>
 </p>
 
 <p>
@@ -68,9 +68,10 @@
 </div>
 
 
-<%= link_to 'Upravit', edit_library_path(@library) %> |
-<%= link_to 'Smazat', @library, method: :delete, data: { confirm: 'Opravdu chcete knihovnu smazat?' } %> |
-<%= link_to 'Zpět', libraries_path %> |
-<%= link_to 'Obnovit', "/feeder/#{@library.code}" %>
+<% if logged_in? %>
+	<%= link_to 'Upravit', edit_library_path(@library) %> |
+	<%= link_to 'Smazat', @library, method: :delete, data: { confirm: 'Opravdu chcete knihovnu smazat?' } %> |
+	<%= link_to 'Obnovit', "/feeder/#{@library.code}" %>
+<% end %>
 
 </div>

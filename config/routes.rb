@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
 
 
-  resources :libraries
   root to: 'libraries#index'
+  
+  resources :libraries
+  resources :sessions, only: [:new, :create, :destroy]
 
+
+  get '/login' => 'sessions#new', as: "login"
+  get '/logout' => 'sessions#destroy', as: "logout"
 
   get 'feeder/' => 'feeder#all'
   get 'feeder/:code' => 'feeder#library'
