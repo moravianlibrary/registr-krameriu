@@ -84,8 +84,20 @@ class FeederController < ApplicationController
 			begin
 				library.documents_public = public_docs["response"]["numFound"]
 			rescue
-			end			
+			end		
 
+			search_page_all_url = api_url + "search?q=fedora.model:page&rows=0"
+			search_page_public_url = api_url + "search?q=fedora.model:page%20AND%20dostupnost:public&rows=0"
+			page_all_docs = get_json(search_page_all_url)
+			begin
+				library.pages_all = page_all_docs["response"]["numFound"]
+			rescue
+			end
+			page_public_docs = get_json(search_page_public_url)
+			begin
+				library.pages_public = page_public_docs["response"]["numFound"]
+			rescue
+			end						
 
 			library.save
 		end

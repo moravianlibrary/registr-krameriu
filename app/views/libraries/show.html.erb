@@ -36,14 +36,17 @@
   <strong>Verze:</strong>
   <%= @library.version %>
 </p>
-
 <p>
   <strong>Vybané (veřejné/všechny):</strong>
-  <td><%= "#{@library.recommended_public}/#{@library.recommended}" %></td>
+  <td><%= "#{number_with_delimiter(@library.recommended_public, delimiter: " ")}/#{number_with_delimiter(@library.recommended, delimiter: " ")}" %></td>
 </p>
 <p>
   <strong>Počet dokumentů (veřejné/všechny):</strong>
-  <td><%= "#{@library.documents_public}/#{@library.documents_all}" %></td>
+  <td><%= "#{number_with_delimiter(@library.documents_public, delimiter: " ")}/#{number_with_delimiter(@library.documents_all, delimiter: " ")}" %></td>
+</p>
+<p>
+  <strong>Počet stran (veřejné/všechny):</strong>
+  <td><%= "#{number_with_delimiter(@library.pages_public, delimiter: " ")}/#{number_with_delimiter(@library.pages_all, delimiter: " ")}" %></td>
 </p>
 
 

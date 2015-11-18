@@ -19,6 +19,7 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
       <th>Verze</th>
       <th class="rk-center" colspan="2">Vybrané</th>
       <th class="rk-center" colspan="2">Dokumenty</th>
+      <th class="rk-center" colspan="2">Stránky</th>
       <th></th>
     </tr>
   </thead>
@@ -54,17 +55,27 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
         </td>
         
         <td class="rk-right <%= "rk-text-warn" if library.recommended_public.nil? || library.recommended_public == 0 %>">
-          <strong><%= library.recommended_public || "?" %>
+        <strong><%= number_with_delimiter(library.recommended_public, delimiter: " ") || "?" %> </strong>
         </td>
-        <td class="<%= "rk-text-warn" if library.recommended.nil? || library.recommended == 0 %>">
-          <%= library.recommended || "?" %>
+        <td class="<%= "rk-text-warn" if library.recommended.nil? || library.recommended == 0 %>">          
+          <%= number_with_delimiter(library.recommended, delimiter: " ") || "?" %>
         </td>
         <td class="rk-right <%= "rk-text-warn" if library.documents_public.nil? || library.documents_public == 0 %>">
-          <strong><%= library.documents_public || "?" %> </strong>
+          <strong><%= number_with_delimiter(library.documents_public, delimiter: " ") || "?" %> </strong>
         </td>
-        <td class="<%= "rk-text-warn" if library.documents_all.nil? || library.documents_all == 0 %>">
-          <%= library.documents_all || "?" %>
+        <td class="<%= "rk-text-warn" if library.documents_all.nil? || library.documents_all == 0 %>">          
+          <%= number_with_delimiter(library.documents_all, delimiter: " ") || "?" %>
         </td>
+
+
+        <td class="rk-right <%= "rk-text-warn" if library.pages_public.nil? || library.pages_public == 0 %>">
+          <strong><%= number_with_delimiter(library.pages_public, delimiter: " ") || "?" %> </strong>
+        </td>
+        <td class="<%= "rk-text-warn" if library.pages_all.nil? || library.pages_all == 0 %>">
+          <%= number_with_delimiter(library.pages_all, delimiter: " ") || "?" %>
+        </td>
+
+
         <td class="rk-right"><%= link_to 'Detail', library %> | <a href="<%= library.client_url %>">Klient</a></td>  
       </tr>
     <% end %>

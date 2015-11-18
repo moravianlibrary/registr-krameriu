@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151109212504) do
+ActiveRecord::Schema.define(version: 20151118212937) do
 
   create_table "helpers", force: :cascade do |t|
     t.datetime "last_update"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 20151109212504) do
     t.integer  "recommended_public"
     t.integer  "documents_all"
     t.integer  "documents_public"
+    t.integer  "pages_all"
+    t.integer  "pages_public"
   end
 
   create_table "users", force: :cascade do |t|
