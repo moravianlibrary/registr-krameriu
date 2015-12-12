@@ -35,7 +35,7 @@ class FeederController < ApplicationController
 	private
 
 		def update_library(library)
-			base_url = library.url
+			base_url = library.search_url
 			api_url = base_url + "api/v5.0/"
 			info = get_json(api_url + "info")
 			if info				
@@ -52,6 +52,11 @@ class FeederController < ApplicationController
 						library.version = vv[1]
 					end
 				end
+			end
+
+			k5_status = get_status(library.client_url)
+			if k5_status == '200'
+				library.k5_client = true
 			end
 
 
@@ -103,7 +108,7 @@ class FeederController < ApplicationController
 		end
 
 
-		def get_text(url)
+		def get_response(url)
 			puts url
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
@@ -114,12 +119,25 @@ class FeederController < ApplicationController
 			end			
 			request = Net::HTTP::Get.new(uri, initheader = {'Content-Type' =>'application/json', 'Accept' =>'application/json'})
 			begin
-				response = http.request(request)
-				response.body
+				http.request(request)				
 			rescue
 				nil
 			end
 		end
+
+		def get_text(url)
+			response = get_response(url)
+			if !response.nil?
+				response.body
+			end
+		end		
+
+		def get_status(url)
+			response = get_response(url)
+			if !response.nil?
+				response.code
+			end
+		end	
 
 
 		def get_json(url)

@@ -45,15 +45,18 @@
 
   <div class="form-group">
     <div class="field">
+      <%= f.label :k5_client, "K5 klient" %><br>  
+      <%= f.select :k5_client, [["No", false], ["Yes", true]], {}, class: 'form-control' %>  
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="field">
       <%= f.label :alt_client_universal, "Alternativní klient (na http://janrychtar.cz/kramerius/)" %><br>  
       <%= f.select :alt_client_universal, [["No", false], ["Yes", true]], {}, class: 'form-control' %>  
     </div>
   </div>
 
-  <div class="field">
-    <%= f.label :k5_client_url, "K5 klient URL" %><br>
-    <%= f.text_field :k5_client_url, class: 'form-control' %>
-  </div>
   <div class="field">
     <%= f.label :alt_client_url, "Alternativní klient URL" %><br>
     <%= f.text_field :alt_client_url, class: 'form-control' %>

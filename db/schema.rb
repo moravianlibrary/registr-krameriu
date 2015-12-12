@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151212154220) do
+ActiveRecord::Schema.define(version: 20151212182505) do
 
   create_table "helpers", force: :cascade do |t|
     t.datetime "last_update"
@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 20151212154220) do
     t.string   "code"
     t.string   "url"
     t.string   "version"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.string   "email"
     t.string   "intro"
     t.string   "right_msg"
@@ -38,10 +38,10 @@ ActiveRecord::Schema.define(version: 20151212154220) do
     t.integer  "pages_public"
     t.integer  "android",              default: 0
     t.integer  "ios",                  default: 0
-    t.boolean  "k4_client"
-    t.string   "k5_client_url"
+    t.boolean  "k4_client",            default: true
     t.string   "alt_client_url"
-    t.boolean  "alt_client_universal"
+    t.boolean  "alt_client_universal", default: false
+    t.boolean  "k5_client",            default: false
   end
 
   create_table "users", force: :cascade do |t|

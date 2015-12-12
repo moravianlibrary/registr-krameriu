@@ -1,15 +1,31 @@
 class Library < ActiveRecord::Base
   before_save :refine_url
 	before_save :normalize_blank_values
-	
+
   default_scope  { order(:id => :asc) }
 	#default_scope  { order(:version => :desc) }
 
+	def search_url 
+		"#{url}/search/"
+	end
+
+	def client_url 
+		"#{url}/client/"
+	end
+
+
 	def k4_client_url 
 		if k4_client?
-			url
+			search_url
 		end
 	end
+
+	def k5_client_url 
+		if k5_client?
+			client_url
+		end
+	end
+
 
 	def alt_client_universal_url 
 		if alt_client_universal?
@@ -40,9 +56,9 @@ class Library < ActiveRecord::Base
 				end_index = -2
 			end
 			if end_index != 0
-				self.url = "#{url[0..end_index]}/search/"	
+				self.url = "#{url[0..end_index]}"	
 			else
-				self.url = "#{url}/search/"	
+				self.url = "#{url}"	
 			end
 		end
 

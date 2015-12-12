@@ -49,13 +49,13 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
 
         <td>
           
-          <% if library.k4_client? %>
+          <% if library.k4_client %>
             <span class="rk-client-txt rk-yes">K4</span>
           <% else %>
             <span class="rk-client-txt rk-no">K4</span>
           <% end %>
 
-          <% if library.k5_client_url? %>
+          <% if library.k5_client %>
             <span class="rk-client-txt rk-yes">K5</span>
           <% else %>
             <span class="rk-client-txt rk-no">K5</span>
