@@ -50,21 +50,21 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
         <td>
           
           <% if library.k4_client %>
-            <span class="rk-client-txt rk-yes">K4</span>
+            <%= link_to "K4", library.k4_client_url, class: "rk-client-txt rk-yes" %>
           <% else %>
             <span class="rk-client-txt rk-no">K4</span>
           <% end %>
 
           <% if library.k5_client %>
-            <span class="rk-client-txt rk-yes">K5</span>
+            <%= link_to "K5", library.k5_client_url, class: "rk-client-txt rk-yes" %>
           <% else %>
             <span class="rk-client-txt rk-no">K5</span>
           <% end %>          
 
           <% if library.alt_client_url? %>
-            <span class="rk-client-txt rk-yes">Alt</span>
+            <%= link_to "Alt", library.alt_client_url, class: "rk-client-txt rk-yes" %>
           <% elsif library.alt_client_universal? %>
-            <span class="rk-client-txt rk-partial">Alt</span>
+            <%= link_to "Alt", library.alt_client_universal_url, class: "rk-client-txt rk-partial" %>
           <% else %>          
             <span class="rk-client-txt rk-no">Alt</span>
           <% end %>          
