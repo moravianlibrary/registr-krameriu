@@ -2,7 +2,7 @@ Library.create(name: 'Moravská zemská knihovna', code: 'mzk', url: 'http://kra
 Library.create(name: 'Národní digitální knihovna', code: 'ndk', url: 'http://krameriusndktest.mzk.cz/')
 Library.create(name: 'Vědecká knihovna v Olomouci', code: 'vkol', url: 'http://kramerius.kr-olomoucky.cz/')
 Library.create(name: 'Studijní a vědecká knihovna v Hradci Králové', code: 'svkhk', url: 'http://kramerius4.svkhk.cz/')
-Library.create(name: 'Severočeská vědecká knihovna v Ústí nad Labem', code: 'svkul', url: 'http://kramerius4.svkul.cz/')
+Library.create(name: 'Severočeská vědecká knihovna v Ústí nad Labem', code: 'svkul', url: 'http://kramerius.svkul.cz/')
 Library.create(name: 'Knihovna Akademie věd ČR', code: 'knav', url: 'http://kramerius.lib.cas.cz/')
 Library.create(name: 'Městská knihovna Česká Třebová', code: 'mkct', url: 'http://k5.digiknihovna.cz/')
 Library.create(name: 'Digitální studovna Ministerstva obrany ČR', code: 'dsmo', url: 'https://kramerius.army.cz/')
