@@ -5,6 +5,12 @@ class LibrariesController < ApplicationController
   # GET /libraries.json
   def index
     @libraries = Library.all
+    if params[:android]
+      @libraries = @libraries.where(android:params[:android])
+    end
+    if params[:ios]
+      @libraries = @libraries.where(ios:params[:ios])
+    end
     @last_update = nil
     @documents_all = Library.sum_of_all_documents
     @documents_public = Library.sum_of_public_documents
