@@ -12,7 +12,7 @@
 				<%= @library.name %>
 			</div>
 			<div class="rk-url">
-				<a href="<%= @library.home_url %>"><%= @library.home_url %></a>
+				<a href="<%= @library.url %>"><%= @library.url %></a>
 			</div>
 		</div>
 	</div>
@@ -28,8 +28,52 @@
 </p>
 
 <p>
-  <strong>Url:</strong>
-  <%= @library.home_url %>
+  <strong>K4 klient:</strong>
+  <% if @library.k4_client_url %>
+    <%= link_to @library.k4_client_url, @library.k4_client_url %>
+  <% end %>     
+</p>
+<p>
+  <strong>K5 klient:</strong>
+  <% if @library.k5_client_url %>
+    <%= link_to @library.k5_client_url, @library.k5_client_url %>
+  <% end %>     
+</p>
+
+
+<p>
+  <strong>Alternativní klient:</strong>
+  <% if @library.alt_client_url %>
+    <%= link_to @library.alt_client_url, @library.alt_client_url %>
+  <% end %>     
+</p>
+<p>
+  <strong>Alternativní klient (univerzální):</strong>
+  <% if @library.alt_client_universal_url %>
+    <%= link_to @library.alt_client_universal_url, @library.alt_client_universal_url %>
+  <% end %>     
+</p>
+
+<p>
+  <strong>Android:</strong>
+  <% if @library.android == 0 %>
+    NE
+  <% elsif @library.android == 1 %>
+    ANO
+  <% elsif @library.android == 2 %>
+    Připraven
+  <% end %>
+</p>
+
+<p>
+  <strong>iOS:</strong>
+  <% if @library.ios == 0 %>
+    NE
+  <% elsif @library.ios == 1 %>
+    ANO
+  <% elsif @library.ios == 2 %>
+    Připraven
+  <% end %>
 </p>
 
 <p>

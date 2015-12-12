@@ -1,1 +1,1 @@
-json.extract! @library, :id, :name, :code, :url, :version, :created_at, :updated_at
+json.extract! @library, :id, :name, :code, :url, :version, :android, :ios, :email, :intro, :right_msg, :pdf_max, :recommended, :recommended_public, :documents_all, :documents_public, :pages_all, :pages_public, :created_at, :updated_at

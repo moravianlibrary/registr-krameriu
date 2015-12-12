@@ -35,7 +35,7 @@ class FeederController < ApplicationController
 	private
 
 		def update_library(library)
-			base_url = library.url + "search/"
+			base_url = library.url
 			api_url = base_url + "api/v5.0/"
 			info = get_json(api_url + "info")
 			if info				

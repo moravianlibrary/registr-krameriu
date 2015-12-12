@@ -21,7 +21,7 @@ Library.create(name: 'Univerzita Karlova v Praze - Fakulta sociálních věd', c
 Library.create(name: 'Národní technická knihovna', code: 'ntk', url: 'http://kramerius.techlib.cz/')
 Library.create(name: 'Středočeská vědecká knihovna v Kladně', code: 'svkkl', url: 'http://kramerius.svkkl.cz/')
 Library.create(name: 'Lesnický a myslivecký digitální archiv', code: 'lmda', url: 'http://lmda.silvarium.cz/')
-Library.create(name: 'Zemědělské poradensko-vzdělávací centrum a Knihovna Antonína Švehly', code: 'uzei', url: 'http://kramerius.uzei.cz/')
+Library.create(name: 'Knihovna Antonína Švehly', code: 'uzei', url: 'http://kramerius.uzei.cz/')
 Library.create(name: 'Univerzitná knižnica v Bratislave', code: 'ukb', url: 'http://pc139.ulib.sk/')
 Library.create(name: 'Slezská univerzita v Opavě', code: 'slu', url: 'http://kramerius.slu.cz/')
 Library.create(name: 'Moravskoslezská vědecká knihovna v Ostravě', code: 'svkos', url: 'http://camea.svkos.cz/')
@@ -30,3 +30,4 @@ Library.create(name: 'Vysoká škola ekonomická v Praze', code: 'vse', url: 'ht
 Library.create(name: 'Národní lékařská knihovna v Praze', code: 'nlk', url: 'http://kramerius.medvik.cz/')
 Library.create(name: 'Mendelova univerzita v Brně', code: 'mendelu', url: 'http://kramerius4.mendelu.cz/')
 Library.create(name: 'Krajská knihovna Vysočiny v Havlíčkově Brodě', code: 'kkvhb', url: 'http://kramerius.kkvysociny.cz/')
+Library.create(name: 'Česká Digitální knihovna', code: 'cdk', url: 'http://cdk.lib.cas.cz/')

@@ -11,6 +11,7 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
     <tr>      
       <th></th>
       <th>Stav</th>
+      <th class="rk-center">Klienti</th>
       <th>Název</th>
       <!--
       <th>Code</th>
@@ -45,11 +46,50 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
             <%= image_tag("ic_not_ok.png", size: "16x16", alt: "NOT OK") %>
           <% end %>
         </td>
+
+        <td>
+          
+          <% if library.k4_client? %>
+            <span class="rk-client-txt rk-yes">K4</span>
+          <% else %>
+            <span class="rk-client-txt rk-no">K4</span>
+          <% end %>
+
+          <% if library.k5_client_url? %>
+            <span class="rk-client-txt rk-yes">K5</span>
+          <% else %>
+            <span class="rk-client-txt rk-no">K5</span>
+          <% end %>          
+
+          <% if library.alt_client_url? %>
+            <span class="rk-client-txt rk-yes">Alt</span>
+          <% elsif library.alt_client_universal? %>
+            <span class="rk-client-txt rk-partial">Alt</span>
+          <% else %>          
+            <span class="rk-client-txt rk-no">Alt</span>
+          <% end %>          
+
+          <% if library.android == 1 %>
+            <%= image_tag("ic_android_black.png", class: "rk-client-icon") %>            
+          <% elsif library.android == 2 %>
+            <%= image_tag("ic_android_gray.png", class: "rk-client-icon") %>            
+          <% else %>
+            <%= image_tag("ic_android_light.png", class: "rk-client-icon") %>            
+          <% end %>
+
+          <% if library.ios == 1 %>
+            <%= image_tag("ic_ios_black.png", class: "rk-client-icon") %>            
+          <% elsif library.ios == 2 %>
+            <%= image_tag("ic_ios_gray.png", class: "rk-client-icon") %>            
+          <% else %>
+            <%= image_tag("ic_ios_light.png", class: "rk-client-icon") %>            
+          <% end %>
+
+        </td>        
        
-        <td><%= library.name %></td>
-        <!--<td><%= library.code %></td>
-        <td><%= library.url %></td>
-        <td><%= library.email %></td>-->
+        <td>
+          <%= link_to library.name, library, style: "color:#000;" %>
+        </td>
         <td class="<%= "rk-text-warn"  if library.version.nil? || !(library.version.start_with?("5.2") || library.version.start_with?("5.1.1")) %>">
           <%= library.version %>
         </td>
@@ -76,7 +116,8 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
         </td>
 
 
-        <td class="rk-right"><%= link_to 'Detail', library %> | <a href="<%= library.client_url %>">Klient</a></td>  
+        <td class="rk-right"><%= link_to 'Detail', library %></td>  
+  
       </tr>
     <% end %>
   </tbody>
