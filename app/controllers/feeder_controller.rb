@@ -55,7 +55,9 @@ class FeederController < ApplicationController
 			end
 
 			k5_status = get_status(library.client_url)
+			puts "k5 client status code: #{k5_status}"
 			if k5_status == '200'
+				puts "setting k5 client to true"
 				library.k5_client = true
 			end
 
