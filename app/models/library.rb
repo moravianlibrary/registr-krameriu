@@ -1,6 +1,7 @@
 class Library < ActiveRecord::Base
   before_save :refine_url
-
+	before_save :normalize_blank_values
+	
   default_scope  { order(:id => :asc) }
 	#default_scope  { order(:version => :desc) }
 
@@ -44,4 +45,11 @@ class Library < ActiveRecord::Base
 				self.url = "#{url}/search/"	
 			end
 		end
+
+		def normalize_blank_values
+	  	attributes.each do |column, value|
+	    	self[column].present? || self[column] = nil
+	  	end
+		end
+
 end
