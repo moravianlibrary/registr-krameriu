@@ -91,17 +91,17 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
             <span class="rk-client-txt rk-no">Alt</span>
           <% end %>          
 
-          <% if library.android == 1 %>
+          <% if library.android == 2 %>
             <%= image_tag("ic_android_black.png", class: "rk-client-icon") %>            
-          <% elsif library.android == 2 %>
+          <% elsif library.android == 1 %>
             <%= image_tag("ic_android_gray.png", class: "rk-client-icon") %>            
           <% else %>
             <%= image_tag("ic_android_light.png", class: "rk-client-icon") %>            
           <% end %>
 
-          <% if library.ios == 1 %>
+          <% if library.ios == 2 %>
             <%= image_tag("ic_ios_black.png", class: "rk-client-icon") %>            
-          <% elsif library.ios == 2 %>
+          <% elsif library.ios == 1 %>
             <%= image_tag("ic_ios_gray.png", class: "rk-client-icon") %>            
           <% else %>
             <%= image_tag("ic_ios_light.png", class: "rk-client-icon") %>            
