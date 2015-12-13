@@ -12,13 +12,9 @@ class LibrariesController < ApplicationController
       @libraries = @libraries.where(ios:params[:ios])
     end
     if params[:sort]
-      if params[:desc]
-        #@libraries = @libraries.order(params[:sort] :desc)
-      else
         @libraries = @libraries.order(params[:sort], :id)
-      end
     else
-      @libraries = @libraries.order(params[:id])
+      @libraries = @libraries.order(:id)
     end
 
     @last_update = nil
