@@ -11,6 +11,16 @@ class LibrariesController < ApplicationController
     if params[:ios]
       @libraries = @libraries.where(ios:params[:ios])
     end
+    if params[:sort]
+      if params[:desc]
+        #@libraries = @libraries.order(params[:sort] :desc)
+      else
+        @libraries = @libraries.order(params[:sort])
+      end
+    else
+      @libraries = @libraries.order(params[:id])
+    end
+
     @last_update = nil
     @documents_all = Library.sum_of_all_documents
     @documents_public = Library.sum_of_public_documents

@@ -2,7 +2,7 @@ class Library < ActiveRecord::Base
   before_save :refine_url
 	before_save :normalize_blank_values
 
-  default_scope  { order(:id => :asc) }
+  #default_scope  { order(:id => :asc) }
 	#default_scope  { order(:version => :desc) }
 
 	def search_url 
