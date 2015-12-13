@@ -15,7 +15,7 @@ class LibrariesController < ApplicationController
       if params[:desc]
         #@libraries = @libraries.order(params[:sort] :desc)
       else
-        @libraries = @libraries.order(params[:sort])
+        @libraries = @libraries.order(params[:sort], :id)
       end
     else
       @libraries = @libraries.order(params[:id])
