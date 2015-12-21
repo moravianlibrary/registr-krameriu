@@ -34,6 +34,13 @@ class Library < ActiveRecord::Base
 	end
 
 
+	def integer_version
+		if version.blank?
+			0
+		else
+			version.gsub(/\D/, "").to_i
+		end
+	end
 
 
 	#static methods
