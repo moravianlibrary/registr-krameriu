@@ -29,7 +29,7 @@ class Library < ActiveRecord::Base
 
 	def alt_client_universal_url 
 		if alt_client_universal?
-			"http://janrychtar.cz/kramerius/#/#{code}/"	
+			"http://digitalniknihovna.cz/#/#{code}/"	
 		end
 	end
 
