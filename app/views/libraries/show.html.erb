@@ -3,7 +3,7 @@
 <div class="rk-detail">
 	
 	<div class="rk-header">
-		<% if Rails.application.assets.find_asset("logo_#{@library.code}.png") %>                    
+		<% if asset_exist?("logo_#{@library.code}.png") %>                    
 			<div class="rk-icon">
 				<%= image_tag("logo_#{@library.code}.png", size: "55x55", alt: "logo") %>
 			</div>

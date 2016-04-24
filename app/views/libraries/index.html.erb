@@ -50,7 +50,7 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
       <tr class='<%= cycle("odd", "even") %>'>
         
          <td>
-          <% if Rails.application.assets.find_asset("logo_#{library.code}.png") %>
+          <% if asset_exist?("logo_#{library.code}.png") %>
           <%= image_tag("logo_#{library.code}.png", size: "20x20", alt: "logo") %>
           <% end %>
         </td>
