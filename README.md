@@ -1,3 +1,2 @@
 # Registr Krameriů
-https://registr-krameriu.herokuapp.com/
-
+http://registr.digitalniknihovna.cz/
