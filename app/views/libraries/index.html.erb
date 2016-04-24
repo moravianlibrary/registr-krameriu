@@ -81,10 +81,8 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
             <span class="rk-client-txt rk-no">K5</span>
           <% end %>          
 
-          <% if library.alt_client_url? %>
-            <%= link_to "Alt", library.alt_client_url, class: "rk-client-txt rk-yes" %>
-          <% elsif library.alt_client_universal? %>
-            <%= link_to "Alt", library.alt_client_universal_url, class: "rk-client-txt rk-partial" %>
+          <% if library.alt_client_universal? %>
+            <%= link_to "DK", library.alt_client_universal_url, class: "rk-client-txt rk-yes" %>
           <% else %>          
             <span class="rk-client-txt rk-no">Alt</span>
           <% end %>          
