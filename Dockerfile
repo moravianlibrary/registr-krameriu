@@ -14,4 +14,5 @@ ADD . $APP_HOME
 
 RUN RAILS_ENV=production bundle exec rake assets:precompile --trace
 
+EXPOSE 3000
 CMD ["rails","server","-e","production","-b","0.0.0.0"]
