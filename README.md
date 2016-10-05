@@ -1,2 +1,2 @@
 # Registr Krameriů
-http://registr.digitalniknihovna.cz/
+http://registrkrameriu.mzk.cz/
