@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151212182505) do
+ActiveRecord::Schema.define(version: 20161021115230) do
 
   create_table "helpers", force: :cascade do |t|
     t.datetime "last_update"
@@ -42,6 +42,10 @@ ActiveRecord::Schema.define(version: 20151212182505) do
     t.string   "alt_client_url"
     t.boolean  "alt_client_universal", default: false
     t.boolean  "k5_client",            default: false
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
   end
 
   create_table "users", force: :cascade do |t|

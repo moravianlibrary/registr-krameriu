@@ -1,14 +1,13 @@
 <% provide(:title, @library.name) %>
 
 <div class="rk-detail">
-	
+
 	<div class="rk-header">
-		<% if asset_exist?("logo_#{@library.code}.png") %>                    
+		<% if @library.logo? %>
 			<div class="rk-icon">
-				<%= image_tag("logo_#{@library.code}.png", size: "55x55", alt: "logo") %>
+				<%= image_tag @library.logo.url(:medium), size: "55x55"%>
 			</div>
 		<% end %>
-
 		<div>
 			<div class="rk-name">
 				<%= @library.name %>
@@ -33,13 +32,13 @@
   <strong>K4 klient:</strong>
   <% if @library.k4_client_url %>
     <%= link_to @library.k4_client_url, @library.k4_client_url %>
-  <% end %>     
+  <% end %>
 </p>
 <p>
   <strong>K5 klient:</strong>
   <% if @library.k5_client_url %>
     <%= link_to @library.k5_client_url, @library.k5_client_url %>
-  <% end %>     
+  <% end %>
 </p>
 
 <!--
@@ -47,14 +46,14 @@
   <strong>Alternativní klient:</strong>
   <% if @library.alt_client_url %>
     <%= link_to @library.alt_client_url, @library.alt_client_url %>
-  <% end %>     
+  <% end %>
 </p>
 -->
 <p>
   <strong>Digitální knihovna</strong>
   <% if @library.alt_client_universal_url %>
     <%= link_to @library.alt_client_universal_url, @library.alt_client_universal_url %>
-  <% end %>     
+  <% end %>
 </p>
 
 <p>

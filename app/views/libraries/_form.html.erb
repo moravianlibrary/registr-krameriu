@@ -1,4 +1,4 @@
-<%= form_for(@library) do |f| %>
+<%= form_for @library, html: { multipart: true } do |f| %>
   <% if @library.errors.any? %>
     <div id="error_explanation">
       <h4><%= pluralize(@library.errors.count, "error") %> prohibited this library from being saved:</h4>
@@ -11,49 +11,60 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :name, "Název" %><br>
     <%= f.text_field :name, class: 'form-control' %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :code, "Kód" %><br>
     <%= f.text_field :code, class: 'form-control' %>
   </div>
-  <div class="field">
+  <div class="form-group">
     <%= f.label :url, "URL" %><br>
     <%= f.text_field :url, class: 'form-control' %>
   </div>
+
+  <div class="form-group">
+    <%= f.label :url, "Logo" %><br>
+    <%= f.file_field :logo, class: 'form-control' %>
+    <% if f.object.logo? %>
+      <%= image_tag(f.object.logo.url(:thumb), size: "50x50") %><br/>
+      <em>Současné logo</em>
+    <% end %>
+  </div>
+
+
   <div class="form-group">
     <div class="field">
-      <%= f.label :android, "Android" %><br>  
-      <%= f.select :android, [["No", 0], ["Ready", 1], ["Yes", 2]], {}, class: 'form-control' %>  
+      <%= f.label :android, "Android" %><br>
+      <%= f.select :android, [["No", 0], ["Ready", 1], ["Yes", 2]], {}, class: 'form-control' %>
     </div>
   </div>
   <div class="form-group">
     <div class="field">
-      <%= f.label :ios, "iOS" %><br>  
-      <%= f.select :ios, [["No", 0], ["Ready", 1], ["Yes", 2]], {}, class: 'form-control' %>  
+      <%= f.label :ios, "iOS" %><br>
+      <%= f.select :ios, [["No", 0], ["Ready", 1], ["Yes", 2]], {}, class: 'form-control' %>
     </div>
   </div>
 
   <div class="form-group">
     <div class="field">
-      <%= f.label :k4_client, "K4 klient" %><br>  
-      <%= f.select :k4_client, [["No", false], ["Yes", true]], {}, class: 'form-control' %>  
+      <%= f.label :k4_client, "K4 klient" %><br>
+      <%= f.select :k4_client, [["No", false], ["Yes", true]], {}, class: 'form-control' %>
     </div>
   </div>
 
   <div class="form-group">
     <div class="field">
-      <%= f.label :k5_client, "K5 klient" %><br>  
-      <%= f.select :k5_client, [["No", false], ["Yes", true]], {}, class: 'form-control' %>  
+      <%= f.label :k5_client, "K5 klient" %><br>
+      <%= f.select :k5_client, [["No", false], ["Yes", true]], {}, class: 'form-control' %>
     </div>
   </div>
 
   <div class="form-group">
     <div class="field">
-      <%= f.label :alt_client_universal, "Alternativní klient (na www.digitalniknihovna.cz)" %><br>  
-      <%= f.select :alt_client_universal, [["No", false], ["Yes", true]], {}, class: 'form-control' %>  
+      <%= f.label :alt_client_universal, "Alternativní klient (na www.digitalniknihovna.cz)" %><br>
+      <%= f.select :alt_client_universal, [["No", false], ["Yes", true]], {}, class: 'form-control' %>
     </div>
   </div>
 

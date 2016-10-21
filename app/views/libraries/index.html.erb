@@ -28,14 +28,14 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
 
 <table style="min-width:1100px;">
   <thead>
-    <tr>      
+    <tr>
       <th></th>
       <th>Stav</th>
       <th class="rk-center">Klienti</th>
       <th>Název</th>
       <!--
       <th>Code</th>
-      <th>Url</th>      
+      <th>Url</th>
       <th>Email</th>-->
       <th>Verze</th>
       <th class="rk-center" colspan="2">Vybrané</th>
@@ -48,13 +48,9 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
   <tbody>
     <% @libraries.each do |library| %>
       <tr class='<%= cycle("odd", "even") %>'>
-        
-         <td>
-          <% if asset_exist?("logo_#{library.code}.png") %>
-          <%= image_tag("logo_#{library.code}.png", size: "20x20", alt: "logo") %>
-          <% end %>
+        <td>
+          <%= image_tag library.logo.url(:thumb), size: "20x20"%>
         </td>
-
         <td>
           <% if library.integer_version >= 511 %>
             <% if library.recommended_public.nil? || library.recommended_public == 0 || library.documents_public.nil? || library.documents_public == 0%>
@@ -68,7 +64,7 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
         </td>
 
         <td>
-          
+
           <% if library.k4_client %>
             <%= link_to "K4", library.k4_client_url, class: "rk-client-txt rk-yes" %>
           <% else %>
@@ -79,49 +75,49 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
             <%= link_to "K5", library.k5_client_url, class: "rk-client-txt rk-yes" %>
           <% else %>
             <span class="rk-client-txt rk-no">K5</span>
-          <% end %>          
+          <% end %>
 
           <% if library.alt_client_universal? %>
             <%= link_to "DK", library.alt_client_universal_url, class: "rk-client-txt rk-yes" %>
-          <% else %>          
+          <% else %>
             <span class="rk-client-txt rk-no">Alt</span>
-          <% end %>          
+          <% end %>
 
           <% if library.android == 2 %>
-            <%= image_tag("ic_android_black.png", class: "rk-client-icon") %>            
+            <%= image_tag("ic_android_black.png", class: "rk-client-icon") %>
           <% elsif library.android == 1 %>
-            <%= image_tag("ic_android_gray.png", class: "rk-client-icon") %>            
+            <%= image_tag("ic_android_gray.png", class: "rk-client-icon") %>
           <% else %>
-            <%= image_tag("ic_android_light.png", class: "rk-client-icon") %>            
+            <%= image_tag("ic_android_light.png", class: "rk-client-icon") %>
           <% end %>
 
           <% if library.ios == 2 %>
-            <%= image_tag("ic_ios_black.png", class: "rk-client-icon") %>            
+            <%= image_tag("ic_ios_black.png", class: "rk-client-icon") %>
           <% elsif library.ios == 1 %>
-            <%= image_tag("ic_ios_gray.png", class: "rk-client-icon") %>            
+            <%= image_tag("ic_ios_gray.png", class: "rk-client-icon") %>
           <% else %>
-            <%= image_tag("ic_ios_light.png", class: "rk-client-icon") %>            
+            <%= image_tag("ic_ios_light.png", class: "rk-client-icon") %>
           <% end %>
 
-        </td>        
-       
+        </td>
+
         <td>
           <%= link_to library.name, library, style: "color:#000;" %>
         </td>
         <td class="<%= "rk-text-warn" if library.integer_version < 511 %>">
           <%= library.version %>
         </td>
-        
+
         <td class="rk-right <%= "rk-text-warn" if library.recommended_public.nil? || library.recommended_public == 0 %>">
         <strong><%= number_with_delimiter(library.recommended_public, delimiter: " ") || "?" %> </strong>
         </td>
-        <td class="<%= "rk-text-warn" if library.recommended.nil? || library.recommended == 0 %>">          
+        <td class="<%= "rk-text-warn" if library.recommended.nil? || library.recommended == 0 %>">
           <%= number_with_delimiter(library.recommended, delimiter: " ") || "?" %>
         </td>
         <td class="rk-right <%= "rk-text-warn" if library.documents_public.nil? || library.documents_public == 0 %>">
           <strong><%= number_with_delimiter(library.documents_public, delimiter: " ") || "?" %> </strong>
         </td>
-        <td class="<%= "rk-text-warn" if library.documents_all.nil? || library.documents_all == 0 %>">          
+        <td class="<%= "rk-text-warn" if library.documents_all.nil? || library.documents_all == 0 %>">
           <%= number_with_delimiter(library.documents_all, delimiter: " ") || "?" %>
         </td>
 
@@ -134,8 +130,8 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
         </td>
 
 
-        <td class="rk-right"><%= link_to 'Detail', library %></td>  
-  
+        <td class="rk-right"><%= link_to 'Detail', library %></td>
+
       </tr>
     <% end %>
   </tbody>

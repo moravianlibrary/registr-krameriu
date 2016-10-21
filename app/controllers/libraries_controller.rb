@@ -45,7 +45,7 @@ class LibrariesController < ApplicationController
 
     respond_to do |format|
       if @library.save
-        format.html { redirect_to @library, notice: 'Library was successfully created.' }
+        format.html { redirect_to @library, notice: 'Knihovna byla vytvořena.' }
         format.json { render :show, status: :created, location: @library }
       else
         format.html { render :new }
@@ -59,7 +59,7 @@ class LibrariesController < ApplicationController
   def update
     respond_to do |format|
       if @library.update(library_params)
-        format.html { redirect_to @library, notice: 'Library was successfully updated.' }
+        format.html { redirect_to @library, notice: 'Knihovna byla upravena.' }
         format.json { render :show, status: :ok, location: @library }
       else
         format.html { render :edit }
@@ -73,7 +73,7 @@ class LibrariesController < ApplicationController
   def destroy
     @library.destroy
     respond_to do |format|
-      format.html { redirect_to libraries_url, notice: 'Library was successfully destroyed.' }
+      format.html { redirect_to libraries_url, notice: 'Knihovna byla odstraněna.' }
       format.json { head :no_content }
     end
   end
@@ -86,6 +86,6 @@ class LibrariesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def library_params
-      params.require(:library).permit(:name, :code, :url, :version, :android, :ios, :k4_client, :k5_client, :alt_client_url, :alt_client_universal)
+      params.require(:library).permit(:name, :code, :url, :version, :android, :ios, :k4_client, :k5_client, :alt_client_url, :alt_client_universal, :logo)
     end
 end
