@@ -15,11 +15,15 @@ namespace :deploy do
   end
   after :publishing, 'deploy:restart'
   after :finishing, 'deploy:cleanup'
-end
 
-namespace :seed do
-  desc "Seed db"
-  task :default do
-    run("cd #{deploy_to}/current; /usr/bin/env bundle exec rake db:seed RAILS_ENV=#{rails_env}")
+
+  task :seed do
+    on primary fetch(:migration_role) do
+      within release_path do
+        with rails_env: fetch(:rails_env)  do
+          execute :rake, 'db:seed'
+        end
+      end
+    end
   end
 end
