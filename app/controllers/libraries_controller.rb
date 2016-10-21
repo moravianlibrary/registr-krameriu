@@ -1,5 +1,5 @@
 class LibrariesController < ApplicationController
-  before_action :set_library, only: [:show, :edit, :update, :destroy]
+  before_action :set_library, only: [:show, :edit, :update, :destroy, :logo, :thumb]
   before_action :ensure_login, only: [:new, :edit, :create, :update, :destroy]
   # GET /libraries
   # GET /libraries.json
@@ -36,6 +36,14 @@ class LibrariesController < ApplicationController
 
   # GET /libraries/1/edit
   def edit
+  end
+
+  def logo
+    redirect_to @library.logo.url(:medium)
+  end
+
+  def thumb
+    redirect_to @library.logo.url(:thumb)
   end
 
   # POST /libraries

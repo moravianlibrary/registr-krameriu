@@ -2,8 +2,13 @@ Rails.application.routes.draw do
 
 
   root to: 'libraries#index'
-  
-  resources :libraries
+
+  resources :libraries do
+    member do
+      get "logo"
+      get "thumb"
+    end
+  end
   resources :sessions, only: [:new, :create, :destroy]
 
 
