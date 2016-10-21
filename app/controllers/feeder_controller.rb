@@ -10,12 +10,12 @@ class FeederController < ApplicationController
 	  code = params[:code]
 	  library = Library.find_by(code: code)
 	  if library.nil?
-	  	render :text => "library with code #{code} not found",:content_type => "text/plain"	  	
+	  	render :text => "library with code #{code} not found",:content_type => "text/plain"
 	  else
 	    update_library(library)
 	    redirect_to library, notice: 'Načtení dat dokončeno'
 	    ##render :text => "ok",:content_type => "text/plain"
-	  end    
+	  end
 	end
 
 	def all
@@ -38,8 +38,8 @@ class FeederController < ApplicationController
 			base_url = library.search_url
 			api_url = base_url + "api/v5.0/"
 			info = get_json(api_url + "info")
-			if info				
-				library.version = info["version"]				
+			if info
+				library.version = info["version"]
 				library.email = info["email"]
 				library.intro = info["intro"]
 				library.right_msg = info["rightMsg"]
@@ -91,7 +91,7 @@ class FeederController < ApplicationController
 			begin
 				library.documents_public = public_docs["response"]["numFound"]
 			rescue
-			end		
+			end
 
 			search_page_all_url = api_url + "search?q=fedora.model:page&rows=0"
 			search_page_public_url = api_url + "search?q=fedora.model:page%20AND%20dostupnost:public&rows=0"
@@ -104,7 +104,7 @@ class FeederController < ApplicationController
 			begin
 				library.pages_public = page_public_docs["response"]["numFound"]
 			rescue
-			end						
+			end
 
 			library.save
 		end
@@ -118,10 +118,10 @@ class FeederController < ApplicationController
 			if uri.scheme == "https"
 				http.use_ssl = true
 				http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-			end			
-			request = Net::HTTP::Get.new(uri, initheader = {'Content-Type' =>'application/json', 'Accept' =>'application/json'})
+			end
+			request = Net::HTTP::Get.new(uri, initheader = {'Content-Type' =>'application/json', 'Accept-Language' => 'cs-CZ', 'Accept' =>'application/json'})
 			begin
-				http.request(request)				
+				http.request(request)
 			rescue
 				nil
 			end
@@ -132,20 +132,20 @@ class FeederController < ApplicationController
 			if !response.nil?
 				response.body
 			end
-		end		
+		end
 
 		def get_status(url)
 			response = get_response(url)
 			if !response.nil?
 				response.code
 			end
-		end	
+		end
 
 
 		def get_json(url)
 			begin
 				JSON.parse(get_text(url))
-			rescue 
+			rescue
 			end
 		end
 
