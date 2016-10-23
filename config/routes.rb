@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy', as: "logout"
 
   get 'feeder/' => 'feeder#all'
+  get 'feeder/reset_clients' => 'feeder#reset_clients'
   get 'feeder/:code' => 'feeder#library'
   get 'ping/' => 'feeder#ping'
 

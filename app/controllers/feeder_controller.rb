@@ -4,6 +4,7 @@ require 'net/https'
 require 'json'
 class FeederController < ApplicationController
 	 before_filter :set_cache_headers
+	 before_action :ensure_login, only: [:reset_clients]
 
 	def library
 	  code = params[:code]
@@ -28,6 +29,18 @@ class FeederController < ApplicationController
 	end
 
 	def ping
+		render :text => "ok",:content_type => "text/plain"
+	end
+
+	def reset_clients
+		Library.all.each do |l|
+		  if l.integer_version > 511
+		    l.update_attributes(alt_client_universal: true)
+		  end
+		  if l.integer_version > 502
+		    l.update_attributes(ios: 2, android: 2)
+		  end
+		end
 		render :text => "ok",:content_type => "text/plain"
 	end
 
