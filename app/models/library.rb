@@ -19,6 +19,14 @@ class Library < ActiveRecord::Base
 	end
 
 
+  def full_address
+    if city.nil? && zip.nil?
+      "#{street}"
+    else
+      "#{street}, #{city} #{zip}"
+    end
+  end
+
 	def k4_client_url
 		if k4_client?
 			search_url

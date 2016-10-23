@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161021115230) do
+ActiveRecord::Schema.define(version: 20161023113622) do
 
   create_table "helpers", force: :cascade do |t|
     t.datetime "last_update"
@@ -46,6 +46,13 @@ ActiveRecord::Schema.define(version: 20161021115230) do
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
+    t.string   "web"
+    t.string   "name_en"
+    t.string   "city"
+    t.string   "street"
+    t.string   "zip"
+    t.float    "longitude"
+    t.float    "latitude"
   end
 
   create_table "users", force: :cascade do |t|

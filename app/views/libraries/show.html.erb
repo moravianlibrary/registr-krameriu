@@ -24,7 +24,24 @@
 </p>
 
 <p>
-  <strong>Code:</strong>
+  <strong>Anglický Název:</strong>
+  <%= @library.name_en %>
+</p>
+
+<p>
+  <strong>Web knihovny:</strong>
+	<% if @library.web %>
+		<%= link_to @library.web, @library.web %>
+	<% end %>
+</p>
+
+<p>
+  <strong>Adresa knihovny:</strong>
+  <%= @library.full_address %>
+</p>
+
+<p>
+  <strong>Identifikátor Kraméria:</strong>
   <%= @library.code %>
 </p>
 
@@ -50,7 +67,7 @@
 </p>
 -->
 <p>
-  <strong>Digitální knihovna</strong>
+  <strong>Digitální knihovna:</strong>
   <% if @library.alt_client_universal_url %>
     <%= link_to @library.alt_client_universal_url, @library.alt_client_universal_url %>
   <% end %>

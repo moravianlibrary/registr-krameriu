@@ -15,10 +15,22 @@
     <%= f.label :name, "Název" %><br>
     <%= f.text_field :name, class: 'form-control' %>
   </div>
+
   <div class="form-group">
-    <%= f.label :code, "Kód" %><br>
+    <%= f.label :name_en, "Anglický název" %><br>
+    <%= f.text_field :name_en, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :web, "Web knihovny" %><br>
+    <%= f.text_field :web, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :code, "Identifikátor Kraméria" %><br>
     <%= f.text_field :code, class: 'form-control' %>
   </div>
+
   <div class="form-group">
     <%= f.label :url, "URL" %><br>
     <%= f.text_field :url, class: 'form-control' %>
@@ -33,6 +45,34 @@
     <% end %>
   </div>
 
+
+
+  <h3 style="margin-top:40px; margin-bottom:20px;">Adresa Knihovny</h3>
+
+  <div class="form-group">
+    <%= f.label :street, "Adresa" %><br>
+    <%= f.text_field :street, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :city, "Město" %><br>
+    <%= f.text_field :city, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :zip, "PSČ" %><br>
+    <%= f.text_field :zip, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :longitude, "Zeměpisná délka" %><br>
+    <%= f.number_field :longitude, step: '0.000000001', class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :latitude, "Zeměpisná šířka" %><br>
+    <%= f.number_field :latitude, step: '0.000000001', class: 'form-control' %>
+  </div>
+
+
+
+  <h3 style="margin-top:40px; margin-bottom:20px;">Přístupnost na klientech</h3>
 
   <div class="form-group">
     <div class="field">
@@ -49,28 +89,9 @@
 
   <div class="form-group">
     <div class="field">
-      <%= f.label :k4_client, "K4 klient" %><br>
-      <%= f.select :k4_client, [["No", false], ["Yes", true]], {}, class: 'form-control' %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="field">
-      <%= f.label :k5_client, "K5 klient" %><br>
-      <%= f.select :k5_client, [["No", false], ["Yes", true]], {}, class: 'form-control' %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="field">
       <%= f.label :alt_client_universal, "Alternativní klient (na www.digitalniknihovna.cz)" %><br>
       <%= f.select :alt_client_universal, [["No", false], ["Yes", true]], {}, class: 'form-control' %>
     </div>
-  </div>
-
-  <div class="field">
-    <%= f.label :alt_client_url, "Alternativní klient URL" %><br>
-    <%= f.text_field :alt_client_url, class: 'form-control' %>
   </div>
 
   <div class="actions">
