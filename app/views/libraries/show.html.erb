@@ -152,6 +152,8 @@
 			<th>Veřejné dokumenty</th>
 			<th>Všechny stránky</th>
 			<th>Veřejné stránky</th>
+			<th>Verze Krameria</th>
+
     </tr>
   </thead>
 
@@ -173,7 +175,9 @@
 				<td>
 					<%= number_with_delimiter(record.pages_public, delimiter: " ") %>
 				</td>
-
+				<td>
+					<%= record.version %>
+				</td>
       </tr>
     <% end %>
   </tbody>

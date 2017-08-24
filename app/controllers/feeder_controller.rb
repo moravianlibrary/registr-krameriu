@@ -121,7 +121,7 @@ class FeederController < ApplicationController
 
 			date = Date.current
 			if Record.where(library: library, date: date).blank?
-				Record.create(library: library, date: date, documents_all: library.documents_all, documents_public: library.documents_public, pages_all: library.pages_all, pages_public: library.pages_public)
+				Record.create(library: library, date: date, documents_all: library.documents_all, documents_public: library.documents_public, pages_all: library.pages_all, pages_public: library.pages_public, version: library.version)
 			end
 
 			library.save
