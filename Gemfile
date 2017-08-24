@@ -17,6 +17,7 @@ group :doc do
 end
 
 gem 'bcrypt', '~> 3.1.7'
+gem 'pg',             '0.17.1'
 
 group :development, :test do
   gem 'sqlite3'
@@ -26,8 +27,4 @@ group :development, :test do
   gem 'capistrano-rails', '~> 1.1.8'
   gem 'capistrano-rbenv', '~> 2.0.4'
   gem 'capistrano-passenger'
-end
-
-group :production do
-  gem 'pg',             '0.17.1'
 end

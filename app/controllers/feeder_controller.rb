@@ -96,6 +96,7 @@ class FeederController < ApplicationController
 			search_public_url = api_url + "search?q=(fedora.model:monograph%20OR%20fedora.model:periodical%20OR%20fedora.model:soundrecording%20OR%20fedora.model:map%20OR%20fedora.model:graphic%20OR%20fedora.model:sheetmusic%20OR%20fedora.model:archive%20OR%20fedora.model:manuscript)%20AND%20dostupnost:public&rows=0"
 			all_docs = get_json(search_all_url)
 			begin
+				documents_all
 				library.documents_all = all_docs["response"]["numFound"]
 			rescue
 			end
@@ -116,6 +117,11 @@ class FeederController < ApplicationController
 			begin
 				library.pages_public = page_public_docs["response"]["numFound"]
 			rescue
+			end
+
+			date = Date.current
+			if Record.where(library: library, date: date).blank?
+				Record.create(library: library, date: date, documents_all: library.documents_all, documents_public: library.documents_public, pages_all: library.pages_all, pages_public: library.pages_public)
 			end
 
 			library.save

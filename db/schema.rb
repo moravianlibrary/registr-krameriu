@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161023113622) do
+ActiveRecord::Schema.define(version: 20170824125718) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "helpers", force: :cascade do |t|
     t.datetime "last_update"
@@ -55,6 +58,19 @@ ActiveRecord::Schema.define(version: 20161023113622) do
     t.float    "latitude"
   end
 
+  create_table "records", force: :cascade do |t|
+    t.integer  "library_id"
+    t.date     "date"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "documents_all"
+    t.integer  "documents_public"
+    t.integer  "pages_all"
+    t.integer  "pages_public"
+  end
+
+  add_index "records", ["library_id"], name: "index_records_on_library_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "login"
     t.string   "password_digest"
@@ -62,4 +78,5 @@ ActiveRecord::Schema.define(version: 20161023113622) do
     t.datetime "updated_at",      null: false
   end
 
+  add_foreign_key "records", "libraries"
 end
