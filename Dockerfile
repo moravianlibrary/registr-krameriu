@@ -19,6 +19,8 @@ COPY Gemfile* ./
 RUN bundle install
 COPY . $APP_HOME
 
+RUN ln -sf /dev/stdout $APP_HOME/log/production.log
+
 RUN RAILS_ENV=production bundle exec rake assets:precompile --trace
 
 EXPOSE 3000
