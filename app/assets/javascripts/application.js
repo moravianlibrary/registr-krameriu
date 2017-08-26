@@ -15,4 +15,5 @@
 //= require jquery-ui
 //= require bootstrap-sprockets
 //= require turbolinks
+//= require Chart.bundle
 //= require_tree .

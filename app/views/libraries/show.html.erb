@@ -135,81 +135,18 @@
 
 
 <% if logged_in? %>
+<div>
 	<%= link_to 'Upravit', edit_library_path(@library) %> |
 	<%= link_to 'Smazat', @library, method: :delete, data: { confirm: 'Opravdu chcete knihovnu smazat?' } %> |
 	<%= link_to 'Obnovit', "/feeder/#{@library.code}" %>
 
 
-
-<div class="rk-list">
-
-
-<table style="min-width:1100px;">
-  <thead>
-    <tr>
-      <th>Datum</th>
-      <th>Všechny dokumenty</th>
-			<th>Veřejné dokumenty</th>
-			<th>Všechny stránky</th>
-			<th>Veřejné stránky</th>
-			<th>Verze Krameria</th>
-
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @library.records.order(date: :desc).each do |record| %>
-      <tr class='<%= cycle("odd", "even") %>'>
-				<td><%= record.id  %>
-          <%= record.date.strftime("%d.%m.%Y")  %>
-        </td>
-				 <td>
-          <%= number_with_delimiter(record.documents_all, delimiter: " ") %>
-					<% if record.inc_documents_all < 0 %>
-						<span style="color:#aa3333;"><%= record.inc_documents_all %></span>
-					<% end %>
-					<% if record.inc_documents_all > 0 %>
-						<span style="color:#33aa33;">+<%= record.inc_documents_all %></span>
-					<% end %>
-        </td>
-				<td>
-					<%= number_with_delimiter(record.documents_public, delimiter: " ") %>
-					<% if record.inc_documents_public < 0 %>
-						<span style="color:#aa3333;"><%= record.inc_documents_public %></span>
-					<% end %>
-					<% if record.inc_documents_public > 0 %>
-						<span style="color:#33aa33;">+<%= record.inc_documents_public %></span>
-					<% end %>
-				</td>
-				<td>
-					<%= number_with_delimiter(record.pages_all, delimiter: " ") %>
-					<% if record.inc_pages_all < 0 %>
-						<span style="color:#aa3333;"><%= record.inc_pages_all %></span>
-					<% end %>
-					<% if record.inc_pages_all > 0 %>
-						<span style="color:#33aa33;">+<%= record.inc_pages_all %></span>
-					<% end %>
-				</td>
-				<td>
-					<%= number_with_delimiter(record.pages_public, delimiter: " ") %>
-					<% if record.inc_pages_public < 0 %>
-						<span style="color:#aa3333;"><%= record.inc_pages_public %></span>
-					<% end %>
-					<% if record.inc_pages_public > 0 %>
-						<span style="color:#33aa33;">+<%= record.inc_pages_public %></span>
-					<% end %>
-				</td>
-				<td>
-					<%= record.version %>
-				</td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+	<div style="margin-top:20px; margin-bottom:20px;">
+		<%= link_to 'Průběh digitalizace', history_library_url(@library), class:"btn btn-primary", style:"margin-right:5px;" %>
+		<%= link_to 'Analýza digitalizace', "/analytics/increments?library=#{@library.code}", class:"btn btn-primary", style:"" %>
+	</div>
 
 
-
-
-<% end %>
 </div>
+<% end %>
 </div>

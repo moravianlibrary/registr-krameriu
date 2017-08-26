@@ -18,6 +18,7 @@ end
 
 gem 'bcrypt', '~> 3.1.7'
 gem 'pg',             '0.17.1'
+gem 'groupdate'
 
 group :development, :test do
   gem 'sqlite3'

@@ -1,0 +1,251 @@
+<div class="analytics-overview container-fluid">
+
+<div class="analytics-header">
+
+  <div class="option-group">
+    <div class="btn-group btn-group-sm library-selector">
+      <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      </button>
+      <div class="dropdown-menu">
+        <% @libraries.each do |library| %>
+          <li><a data-library-id="<%= library.id %>" data-library-name="<%= library.name %>" class="dropdown-item" href="#"><%= library.name %></a></li>
+        <% end %>
+          <li class="divider"></li>
+          <li><a data-library-id="all" data-library-name="Všechny knihovny" class="dropdown-item" href="#">Všechny knihovny</a></li>
+      </div>
+    </div>
+
+    <div class="btn-group btn-group-sm date-interval-selector">
+      <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Posledních 7 dní
+      </button>
+      <div class="dropdown-menu">
+        <li><a data-interval="l7d" class="dropdown-item" href="#">Posledních 7 dní</a></li>
+        <li><a data-interval="l30d" class="dropdown-item" href="#">Posledních 30 dní</a></li>
+        <li><a data-interval="tm" class="dropdown-item" href="#">Tento měsíc</a></li>
+        <li><a data-interval="lm" class="dropdown-item" href="#">Minulý měsíc</a></li>
+        <li><a data-interval="ty" class="dropdown-item" href="#">Tento rok</a></li>
+        <li><a data-interval="ly" class="dropdown-item" href="#">Minulý rok</a></li>
+        <li><a data-interval="all" class="dropdown-item" href="#">Celou dobu</a></li>
+        <!-- <li class="divider"></li>
+        <li><a class="dropdown-item" href="#">Custom period</a></li> -->
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <div class="date-group-selector btn-group btn-group-sm" role="group">
+      <button data-group="day" type="button" class="btn btn-secondary">Day</button>
+      <button data-group="week" type="button" class="btn btn-secondary">Week</button>
+      <button data-group="month" type="button" class="btn btn-secondary active">Month</button>
+      <button data-group="year" type="button" class="btn btn-secondary">Year</button>
+  </div>
+
+</div>
+
+
+
+  <!-- <div style="height:200px;"> -->
+  <div class="chart-wrapper">
+    <canvas id="date-chart"></canvas>
+  </div>
+
+  <div class="analytics-overall row">
+    <div class="col-xs-4 overall-item">
+      <div class="overall-label">Všechy dokumenty</div>
+      <div class="overall-value" id="overall1"></div>
+    </div>
+    <div class="col-xs-4 overall-item">
+      <div class="overall-label">Veřejné dokumenty</div>
+      <div class="overall-value" id="overall2"></div>
+    </div>
+    <div class="col-xs-4 overall-item">
+      <div class="overall-label">Všechy stránky</div>
+      <div class="overall-value" id="overall3"></div>
+    </div>
+    <div class="col-xs-6 overall-item">
+      <div class="overall-label">Veřejné stránky</div>
+      <div class="overall-value" id="overall4"></div>
+    </div>
+  </div>
+
+
+</div>
+
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+  var firstLoad = true;
+  var dateIntervalNames = {
+    "l7d": "Posledních 7 dní",
+    "l30d": "Posledních 30 dní",
+    "tm": "Tento měsíc",
+    "lm": "Minulý měsíc",
+    "ty": "Tento měsíc",
+    "ly": "Minulý měsíc",
+    "all": "Celou dobu"
+  };
+  var dateIntervalGroups = {
+    "l7d": "day",
+    "l30d": "day",
+    "tm": "day",
+    "lm": "day",
+    "ty": "month",
+    "ly": "month",
+    "all": "month"
+  };
+
+  var activeDateGroup = 'day';
+  var activeDateInterval = 'l7d';
+  var activeLibraryId = "<%= @active_library_id ? @active_library_id : 'all' %>";
+  var activeLibraryName = "<%= @active_library_name ? @active_library_name : 'Všechny knihovny' %>";
+
+  function highlightDateInterval() {
+    var name = dateIntervalNames[activeDateInterval];
+    $(".date-interval-selector button").text(name);
+  }
+
+  function highlightLibrary() {
+    $(".library-selector button").text(activeLibraryName);
+  }
+
+  function highlightDateGroup() {
+    $(".date-group-selector button").removeClass('active');
+    $(".date-group-selector button[data-group=" + activeDateGroup + "]").addClass('active');
+  }
+
+  function dateChartInit() {
+    highlightDateInterval();
+    highlightDateGroup();
+    highlightLibrary();
+    updateDateChart();
+  }
+
+
+  $(".date-group-selector button").on('click', function(event) {
+    var button = $(this);
+    activeDateGroup = button.data('group');
+    updateDateChart();
+  });
+
+  $(".date-interval-selector a").on('click', function(event) {
+    event.preventDefault();
+    var button = $(this);
+    activeDateInterval = button.data('interval');
+    activeDateGroup = dateIntervalGroups[activeDateInterval];
+    updateDateChart();
+  });
+
+  $(".library-selector a").on('click', function(event) {
+    event.preventDefault();
+    var button = $(this);
+    activeLibraryId = button.data('libraryId');
+    activeLibraryName = button.data('libraryName');
+    updateDateChart();
+  });
+
+
+  function onUpdateDateChart(data) {
+    dateChart.data.labels = data.labels;
+    dateChart.data.datasets[0].data = data.documents_all;
+    dateChart.data.datasets[1].data = data.documents_public;
+    dateChart.data.datasets[2].data = data.pages_all;
+    dateChart.data.datasets[3].data = data.pages_public;
+
+
+    $("#overall1").text(data.overall_documents_all);
+    $("#overall2").text(data.overall_documents_public);
+    $("#overall3").text(data.overall_pages_all);
+    $("#overall4").text(data.overall_pages_public);
+
+
+    if(firstLoad) {
+      firstLoad = false;
+    } else {
+      dateChart.options.animation.duration = 1000;
+    }
+    dateChart.update();
+  }
+
+  function updateDateChart() {
+    highlightDateInterval();
+    highlightDateGroup();
+    highlightLibrary();
+    $.ajax({
+      dataType: "json",
+      url: "<%= analytics_data_url %>",
+      data: {"group": activeDateGroup,
+            "interval": activeDateInterval,
+            "library": activeLibraryId},
+      success: function(data) {
+        onUpdateDateChart(data);
+      }
+    });
+  }
+
+var dateChartCtx = $("#date-chart");
+
+var dateChart = new Chart(dateChartCtx, {
+    type: 'bar',
+    data: {
+        labels: [],
+        datasets: [{
+            label: 'Všechny dokumenty',
+            data: [],
+            backgroundColor: 'rgba(51, 51, 51, 0.7)',
+            borderColor: 'rgba(51, 51, 51, 1)',
+            borderWidth: 1,
+            hidden: false
+        },
+        {
+            label: 'Veřejné dokumenty',
+            data: [],
+            // backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            // borderColor: 'rgba(255,99,132,1)',
+            backgroundColor: 'rgba(170, 51, 51, 0.7)',
+            borderColor: 'rgba(170,51,51,1)',
+            borderWidth: 1,
+            hidden: false
+        },
+        {
+            label: 'Všechny stránky',
+            data: [],
+            backgroundColor: 'rgba(27, 115, 158, 0.7)',
+            borderColor: 'rgba(27, 115, 158, 1)',
+            borderWidth: 1,
+            hidden: true
+        },
+        {
+            label: 'Veřejné stránky',
+            data: [],
+            backgroundColor: 'rgba(37, 142, 86, 0.7)',
+            borderColor: 'rgba(37, 142, 86, 1)',
+            borderWidth: 1,
+            hidden: true
+        }
+      ]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        },
+        animation: {
+          duration:0
+        },
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+
+
+dateChartInit();
+
+});
+</script>

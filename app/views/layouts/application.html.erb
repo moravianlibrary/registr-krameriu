@@ -2,13 +2,13 @@
 <html>
 <head>
   <title><%= full_title(yield(:title)) %></title>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0, user-scalable=no">    
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
   <meta name="description" content="Seznam Krameriů v knihovnách s údaji o jednotlivých instalacích - verze, počty dokumentů, dostupnost v klientech, ...">
   <meta name="author" content="Jan Rychtář" />
 
   <meta property="og:title" content="<%= full_title(yield(:title)) %>" />
   <meta property="og:description" content="Seznam Krameriů v knihovnách s údaji o jednotlivých instalacích - verze, počty dokumentů, dostupnost v klientech, ..." />
-  <meta property="og:type" content="website" /> 
+  <meta property="og:type" content="website" />
 
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -16,14 +16,14 @@
 </head>
 <body>
   <%= render 'layouts/header' %>
-  
+
   <div class="container" style="min-height:100%;position:relative;">
-    <div style="margin: 0 0 60px;">
+    <div>
       <% flash.each do |message_type, message| %>
         <div class="flash flash-<%= message_type %>"><%= message %></div>
       <% end %>
-      <%= yield %>  
-    </div>    
+      <%= yield %>
+    </div>
   </div>
 
 
@@ -36,7 +36,7 @@
   ga('create', 'UA-65303593-6', 'auto');
   ga('send', 'pageview');
 
-</script>  
+</script>
 
 </body>
 </html>

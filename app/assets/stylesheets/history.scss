@@ -1,6 +1,14 @@
-@import "custom";
-
-.rk-list {
+.rk-history {
+  h2 {
+    font-size: 24px;
+    color: #555;
+  }
+  h3 {
+    font-size: 15px;
+    color: #222;
+    margin-top: -5px;
+    margin-bottom: 20px;
+  }
 	padding-bottom: 50px;
 	.rk-note {
 		margin-bottom: 15px;
@@ -9,12 +17,11 @@
 	table {
 		width:100%;
 		thead {
-			background-color: $color-primary;
+			background-color: #333333;
     	font-size: 14px;
     	color: #fff;
     	th {
-    		padding-top: 5px;
-    		padding-bottom: 5px;
+    		padding: 5px;
     		font-weight: 300;
     	}
 		}
@@ -56,26 +63,6 @@
 		}
 		.rk-right {
 			text-align: right;
-		}
-	}
-}
-
-
-
-.rk-detail {
-	.rk-header {
-		margin-top: 10px;
-		margin-bottom: 15px;
-		overflow: hidden;
-		.rk-icon {
-			float: left;
-			padding-right: 15px;
-		}
-		.rk-name {
-			font-size: 21px;
-		}
-		.rk-url {
-
 		}
 	}
 }
