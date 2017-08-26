@@ -160,20 +160,44 @@
   <tbody>
     <% @library.records.order(date: :desc).each do |record| %>
       <tr class='<%= cycle("odd", "even") %>'>
-				<td>
+				<td><%= record.id  %>
           <%= record.date.strftime("%d.%m.%Y")  %>
         </td>
 				 <td>
           <%= number_with_delimiter(record.documents_all, delimiter: " ") %>
+					<% if record.inc_documents_all < 0 %>
+						<span style="color:#aa3333;"><%= record.inc_documents_all %></span>
+					<% end %>
+					<% if record.inc_documents_all > 0 %>
+						<span style="color:#33aa33;">+<%= record.inc_documents_all %></span>
+					<% end %>
         </td>
 				<td>
 					<%= number_with_delimiter(record.documents_public, delimiter: " ") %>
+					<% if record.inc_documents_public < 0 %>
+						<span style="color:#aa3333;"><%= record.inc_documents_public %></span>
+					<% end %>
+					<% if record.inc_documents_public > 0 %>
+						<span style="color:#33aa33;">+<%= record.inc_documents_public %></span>
+					<% end %>
 				</td>
 				<td>
 					<%= number_with_delimiter(record.pages_all, delimiter: " ") %>
+					<% if record.inc_pages_all < 0 %>
+						<span style="color:#aa3333;"><%= record.inc_pages_all %></span>
+					<% end %>
+					<% if record.inc_pages_all > 0 %>
+						<span style="color:#33aa33;">+<%= record.inc_pages_all %></span>
+					<% end %>
 				</td>
 				<td>
 					<%= number_with_delimiter(record.pages_public, delimiter: " ") %>
+					<% if record.inc_pages_public < 0 %>
+						<span style="color:#aa3333;"><%= record.inc_pages_public %></span>
+					<% end %>
+					<% if record.inc_pages_public > 0 %>
+						<span style="color:#33aa33;">+<%= record.inc_pages_public %></span>
+					<% end %>
 				</td>
 				<td>
 					<%= record.version %>

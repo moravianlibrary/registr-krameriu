@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170824141355) do
+ActiveRecord::Schema.define(version: 20170826093801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,13 +61,17 @@ ActiveRecord::Schema.define(version: 20170824141355) do
   create_table "records", force: :cascade do |t|
     t.integer  "library_id"
     t.date     "date"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.integer  "documents_all"
     t.integer  "documents_public"
     t.integer  "pages_all"
     t.integer  "pages_public"
     t.string   "version"
+    t.integer  "inc_documents_all",    default: 0
+    t.integer  "inc_documents_public", default: 0
+    t.integer  "inc_pages_all",        default: 0
+    t.integer  "inc_pages_public",     default: 0
   end
 
   add_index "records", ["library_id"], name: "index_records_on_library_id", using: :btree

@@ -120,11 +120,30 @@ class FeederController < ApplicationController
 			end
 
 			date = Date.current
-			if Record.where(library: library, date: date).blank?
-				Record.create(library: library, date: date, documents_all: library.documents_all, documents_public: library.documents_public, pages_all: library.pages_all, pages_public: library.pages_public, version: library.version)
+			r = Record.where(library: library, date: date)
+			if(r.blank?)
+				r = Record.create(library: library, date: date, documents_all: library.documents_all, documents_public: library.documents_public, pages_all: library.pages_all, pages_public: library.pages_public, version: library.version)
+				calc_inc(r)
+			else
+				r.first.update(documents_all: library.documents_all, documents_public: library.documents_public, pages_all: library.pages_all, pages_public: library.pages_public, version: library.version)
+				calc_inc(r.first)
 			end
-
 			library.save
+		end
+
+
+		def calc_inc(record)
+			library = record.library
+			last = library.records.where("date < ?", record.date).order(date: :desc).limit(1)
+			if !last.blank?
+				r = last[0]
+				record.update(
+					inc_documents_all: (record.documents_all - r.documents_all),
+					inc_documents_public: (record.documents_public - r.documents_public),
+					inc_pages_all: (record.pages_all - r.pages_all),
+					inc_pages_public: (record.pages_public - r.pages_public),
+					)
+			end
 		end
 
 
