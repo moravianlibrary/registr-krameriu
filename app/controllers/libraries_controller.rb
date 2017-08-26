@@ -1,6 +1,6 @@
 class LibrariesController < ApplicationController
   before_action :set_library, only: [:history, :show, :edit, :update, :destroy, :logo, :thumb]
-  before_action :ensure_login, only: [:hostory, :new, :edit, :create, :update, :destroy]
+  before_action :ensure_login, only: [:history, :new, :edit, :create, :update, :destroy]
   # GET /libraries
   # GET /libraries.json
   def index

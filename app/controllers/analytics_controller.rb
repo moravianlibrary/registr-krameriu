@@ -1,4 +1,5 @@
 class AnalyticsController < ApplicationController
+  before_action :ensure_login
 
   def increments
     if params[:library]
