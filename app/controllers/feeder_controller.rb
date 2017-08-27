@@ -137,12 +137,15 @@ class FeederController < ApplicationController
 			last = library.records.where("date < ?", record.date).order(date: :desc).limit(1)
 			if !last.blank?
 				r = last[0]
-				record.update(
-					inc_documents_all: (record.documents_all - r.documents_all),
-					inc_documents_public: (record.documents_public - r.documents_public),
-					inc_pages_all: (record.pages_all - r.pages_all),
-					inc_pages_public: (record.pages_public - r.pages_public),
-					)
+				begin
+					record.update(
+						inc_documents_all: (record.documents_all - r.documents_all),
+						inc_documents_public: (record.documents_public - r.documents_public),
+						inc_pages_all: (record.pages_all - r.pages_all),
+						inc_pages_public: (record.pages_public - r.pages_public),
+						)
+				rescue
+				end
 			end
 		end
 
@@ -152,6 +155,7 @@ class FeederController < ApplicationController
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
 			http.read_timeout = 10
+			http.open_timeout = 10
 			if uri.scheme == "https"
 				http.use_ssl = true
 				http.verify_mode = OpenSSL::SSL::VERIFY_NONE
