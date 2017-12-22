@@ -145,6 +145,6 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
     </div>
   <% end %>
   <div style="float:right;">
-    Posledni obnova <%= @last_update.in_time_zone("Prague").strftime('%m.%d.%Y %H:%M:%S') if @last_update %>
+    Posledni obnova <%= @last_update.in_time_zone("Prague").strftime('%d.%m.%Y %H:%M:%S') if @last_update %>
   </div>
 </div>
