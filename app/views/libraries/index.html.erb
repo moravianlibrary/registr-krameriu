@@ -34,6 +34,7 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
       <th></th>
       <th class="rk-center">Klienti</th>
       <th>Název</th>
+      <th>Kód</th>
       <th>Sigla</th>
       <th>Verze</th>
       <th>Kramerius</th>
@@ -109,6 +110,9 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
 
         <td>
           <%= link_to library.name, library, style: "color:#000;" %>
+        </td>
+        <td>
+          <%= library.code %>
         </td>
         <td>
           <%= library.sigla %>
