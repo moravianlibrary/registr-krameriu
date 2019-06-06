@@ -97,6 +97,6 @@ class LibrariesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def library_params
-      params.require(:library).permit(:name, :name_en, :web, :street, :city, :zip, :longitude, :latitude, :code, :url, :version, :android, :ios, :k4_client, :k5_client, :alt_client_url, :alt_client_universal, :logo)
+      params.require(:library).permit(:name, :name_en, :sigla, :oai_provider, :new_client_url, :web, :street, :city, :zip, :longitude, :latitude, :code, :url, :version, :android, :ios, :k4_client, :k5_client, :alt_client_url, :alt_client_universal, :logo)
     end
 end

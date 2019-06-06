@@ -2,12 +2,18 @@
 
 .rk-list {
 	padding-bottom: 50px;
+	padding-left: 20px;
+	padding-right: 20px;
 	.rk-note {
 		margin-bottom: 15px;
 		margin-top: 8px;
 	}
+	.kr-table-wrapper {
+		width: 100%;
+		overflow-x: auto;
+	}
 	table {
-		width:100%;
+		width: 2000px;
 		thead {
 			background-color: $color-primary;
     	font-size: 14px;
@@ -15,7 +21,8 @@
     	th {
     		padding-top: 5px;
     		padding-bottom: 5px;
-    		font-weight: 300;
+				font-weight: 300;
+				padding:5px;
     	}
 		}
 		tr {
@@ -49,6 +56,30 @@
 			}
 			.rk-partial {
 				color:#999;
+			}
+			.kr-alive {
+				width: 12px;
+				height: 12px;
+				border-radius: 50%;
+				background: #333;
+				&.kr-alive-yes {
+					background: #36b11c;
+				}
+				&.kr-alive-no {
+					background: #c51717;
+				}
+			}
+			.kr-https {
+				width: 12px;
+				height: 12px;
+				border-radius: 50%;
+				background: #333;
+				&.kr-https-yes {
+					background: #36b11c;
+				}
+				&.kr-https-no {
+					background: transparent;
+				}
 			}
 		}
 		.rk-center {

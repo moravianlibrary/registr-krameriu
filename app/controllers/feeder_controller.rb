@@ -3,18 +3,17 @@ require 'net/http'
 require 'net/https'
 require 'json'
 class FeederController < ApplicationController
-	 before_filter :set_cache_headers
+	 before_action :set_cache_headers
 	 before_action :ensure_login, only: [:reset_clients]
 
 	def library
 	  code = params[:code]
 	  library = Library.find_by(code: code)
-	  if library.nil?
-	  	render :text => "library with code #{code} not found",:content_type => "text/plain"
+		if library.nil?
+			render plain: "library with code #{code} not found"
 	  else
 	    update_library(library)
 	    redirect_to library, notice: 'Načtení dat dokončeno'
-	    ##render :text => "ok",:content_type => "text/plain"
 	  end
 	end
 
@@ -24,12 +23,12 @@ class FeederController < ApplicationController
 		end
 		Helper.destroy_all
 		Helper.create(last_update:Time.now)
-		render :text => "ok",:content_type => "text/plain"
+		render plain: "ok"
 		#redirect_to libraries_path, notice: 'Načtení dat dokončeno'
 	end
 
 	def ping
-		render :text => "ok",:content_type => "text/plain"
+		render plain: "ok"
 	end
 
 	def reset_clients
@@ -41,7 +40,7 @@ class FeederController < ApplicationController
 		    l.update_attributes(ios: 2, android: 2)
 		  end
 		end
-		render :text => "ok",:content_type => "text/plain"
+		render plain: "ok"
 	end
 
 	private
@@ -50,21 +49,27 @@ class FeederController < ApplicationController
 			base_url = library.search_url
 			api_url = base_url + "api/v5.0/"
 			info = get_json(api_url + "info")
+			library.alive = false
 			if info
 				library.version = info["version"]
 				library.email = info["email"]
 				library.intro = info["intro"]
 				library.right_msg = info["rightMsg"]
 				library.pdf_max = info["pdfMaxRange"]
+				library.alive = true
 			else
 				t = get_text(base_url)
 				if t
 					vv = t.match(/version: (.*), /)
 					if vv
 						library.version = vv[1]
+						library.alive = true
 					end
 				end
 			end
+
+			vc = get_json(api_url + "vc")
+			library.collections = vc.length unless vc.nil?
 
 			k5_status = get_status(library.client_url)
 			puts "k5 client status code: #{k5_status}"

@@ -17,7 +17,7 @@
 <body>
   <%= render 'layouts/header' %>
 
-  <div class="container" style="min-height:100%;position:relative;">
+  <div style="min-height:100%; position:relative;">
     <div>
       <% flash.each do |message_type, message| %>
         <div class="flash flash-<%= message_type %>"><%= message %></div>

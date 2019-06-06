@@ -1,5 +1,6 @@
 <% provide(:title, @library.name) %>
 
+<div class="container">
 <div class="rk-detail">
 
 	<div class="rk-header">
@@ -36,6 +37,13 @@
 </p>
 
 <p>
+  <strong>Sigla:</strong>
+	<% if @library.sigla %>
+		<%= @library.sigla %>
+	<% end %>
+</p>
+
+<p>
   <strong>Adresa knihovny:</strong>
   <%= @library.full_address %>
 </p>
@@ -46,26 +54,18 @@
 </p>
 
 <p>
-  <strong>K4 klient:</strong>
+  <strong>Kramerius:</strong>
   <% if @library.k4_client_url %>
     <%= link_to @library.k4_client_url, @library.k4_client_url %>
   <% end %>
 </p>
 <p>
-  <strong>K5 klient:</strong>
-  <% if @library.k5_client_url %>
-    <%= link_to @library.k5_client_url, @library.k5_client_url %>
+  <strong>Uživatelské rozhraní:</strong>
+  <% if @library.new_client_url %>
+    <%= link_to @library.new_client_url, @library.new_client_url %>
   <% end %>
 </p>
 
-<!--
-<p>
-  <strong>Alternativní klient:</strong>
-  <% if @library.alt_client_url %>
-    <%= link_to @library.alt_client_url, @library.alt_client_url %>
-  <% end %>
-</p>
--->
 <p>
   <strong>Digitální knihovna:</strong>
   <% if @library.alt_client_universal_url %>
@@ -111,7 +111,10 @@
   <strong>Počet stran (veřejné/všechny):</strong>
   <td><%= "#{number_with_delimiter(@library.pages_public, delimiter: " ")}/#{number_with_delimiter(@library.pages_all, delimiter: " ")}" %></td>
 </p>
-
+<p>
+  <strong>Počet sbírek:</strong>
+  <td><%= "#{number_with_delimiter(@library.collections, delimiter: " ")}" %></td>
+</p>
 
 <p>
   <strong>Email:</strong>
@@ -120,6 +123,13 @@
 <p>
   <strong>PDF Max Range:</strong>
   <%= @library.pdf_max %>
+</p>
+
+<p>
+  <strong>OAI provider:</strong>
+	<% if @library.oai_provider %>
+		<%= link_to @library.oai_provider, @library.oai_provider %>
+	<% end %>
 </p>
 
 <strong>Intro:</strong>
@@ -149,4 +159,6 @@
 
 </div>
 <% end %>
+</div>
+
 </div>

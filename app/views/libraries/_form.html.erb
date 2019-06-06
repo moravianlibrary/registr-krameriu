@@ -27,13 +27,28 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :sigla, "Sigla " %><br>
+    <%= f.text_field :sigla, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :code, "Identifikátor Kraméria" %><br>
     <%= f.text_field :code, class: 'form-control' %>
   </div>
 
   <div class="form-group">
-    <%= f.label :url, "URL" %><br>
+    <%= f.label :url, "URL - Kramerius" %><br>
     <%= f.text_field :url, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :new_client_url, "URL - Klient" %><br>
+    <%= f.text_field :new_client_url, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :oai_provider, "OAI Provider" %><br>
+    <%= f.text_field :oai_provider, class: 'form-control' %>
   </div>
 
   <div class="form-group">
@@ -89,7 +104,7 @@
 
   <div class="form-group">
     <div class="field">
-      <%= f.label :alt_client_universal, "Alternativní klient (na www.digitalniknihovna.cz)" %><br>
+      <%= f.label :alt_client_universal, "www.digitalniknihovna.cz" %><br>
       <%= f.select :alt_client_universal, [["No", false], ["Yes", true]], {}, class: 'form-control' %>
     </div>
   </div>

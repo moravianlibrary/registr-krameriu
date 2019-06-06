@@ -26,21 +26,24 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
 
 </div>
 
-<table style="min-width:1100px;">
+<div class="kr-table-wrapper">
+<table>
   <thead>
     <tr>
       <th></th>
-      <th>Stav</th>
+      <th></th>
       <th class="rk-center">Klienti</th>
       <th>Název</th>
-      <!--
-      <th>Code</th>
-      <th>Url</th>
-      <th>Email</th>-->
+      <th>Sigla</th>
       <th>Verze</th>
+      <th>Kramerius</th>
+      <th>Uživatelské rozhraní</th>
       <th class="rk-center" colspan="2">Vybrané</th>
       <th class="rk-center" colspan="2">Dokumenty</th>
       <th class="rk-center" colspan="2">Stránky</th>
+      <th>Sbírky</th>
+      <th>OAI Provider</th>
+      <th>HTTPS</th>
       <th></th>
     </tr>
   </thead>
@@ -49,32 +52,24 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
     <% @libraries.each do |library| %>
       <tr class='<%= cycle("odd", "even") %>'>
         <td>
-          <%= image_tag library.logo.url(:thumb), size: "20x20"%>
+          <div class="kr-alive <%= library.alive ? "kr-alive-yes" : "kr-alive-no" %>"></div>
         </td>
         <td>
-          <% if library.integer_version >= 511 %>
-            <% if library.recommended_public.nil? || library.recommended_public == 0 || library.documents_public.nil? || library.documents_public == 0%>
-              <%= image_tag("ic_ok_green.png", size: "16x16", alt: "OK") %>
-            <% else %>
-              <%= image_tag("ic_ok.png", size: "16x16", alt: "OK?") %>
-            <% end %>
-          <% else %>
-            <%= image_tag("ic_not_ok.png", size: "16x16", alt: "NOT OK") %>
-          <% end %>
+          <%= image_tag library.logo.url(:thumb), size: "20x20"%>
         </td>
 
         <td>
 
           <% if library.k4_client %>
-            <%= link_to "K4", library.k4_client_url, class: "rk-client-txt rk-yes" %>
+            <%= link_to "K", library.k4_client_url, class: "rk-client-txt rk-yes" %>
           <% else %>
             <span class="rk-client-txt rk-no">K4</span>
           <% end %>
 
-          <% if library.k5_client %>
-            <%= link_to "K5", library.k5_client_url, class: "rk-client-txt rk-yes" %>
+          <% unless library.new_client_url.blank? %>
+            <%= link_to "UI", library.new_client_url, class: "rk-client-txt rk-yes" %>
           <% else %>
-            <span class="rk-client-txt rk-no">K5</span>
+            <span class="rk-client-txt rk-no">UI</span>
           <% end %>
 
           <% if library.alt_client_universal? %>
@@ -104,9 +99,29 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
         <td>
           <%= link_to library.name, library, style: "color:#000;" %>
         </td>
+        <td>
+          <%= library.sigla %>
+        </td>
         <td class="<%= "rk-text-warn" if library.integer_version < 511 %>">
           <%= library.version %>
         </td>
+
+
+        <td>
+          <% unless library.url.blank? %>
+            <%= link_to library.url, library.url, class: "" %>
+          <% end %>
+        </td>
+
+
+        <td>
+          <% unless library.new_client_url.blank? %>
+            <%= link_to library.new_client_url, library.new_client_url, class: "" %>
+          <% end %>
+        </td>
+
+
+
 
         <td class="rk-right <%= "rk-text-warn" if library.recommended_public.nil? || library.recommended_public == 0 %>">
         <strong><%= number_with_delimiter(library.recommended_public, delimiter: " ") || "?" %> </strong>
@@ -129,6 +144,19 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
           <%= number_with_delimiter(library.pages_all, delimiter: " ") || "?" %>
         </td>
 
+        <td>
+          <%= number_with_delimiter(library.collections, delimiter: " ") || "?" %>
+        </td>
+
+        <td>
+          <% unless library.oai_provider.blank? %>
+            <%= link_to library.oai_provider, library.oai_provider, class: "" %>
+          <% end %>
+        </td>
+
+        <td>
+          <div class="kr-https <%= library.url && library.url.start_with?("https") ? "kr-https-yes" : "kr-https-no" %>"></div>
+        </td>
 
         <td class="rk-right"><%= link_to 'Detail', library %></td>
 
@@ -136,6 +164,7 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
     <% end %>
   </tbody>
 </table>
+</div>
 
 <br>
 
