@@ -6,7 +6,7 @@ class FeederController < ApplicationController
 	 before_action :set_cache_headers
 	 before_action :ensure_login, only: [:reset_clients]
 
-	def library
+	def single_library
 	  code = params[:code]
 	  library = Library.find_by(code: code)
 		if library.nil?
@@ -71,12 +71,12 @@ class FeederController < ApplicationController
 			vc = get_json(api_url + "vc")
 			library.collections = vc.length unless vc.nil?
 
-			k5_status = get_status(library.client_url)
-			puts "k5 client status code: #{k5_status}"
-			if k5_status == '200'
-				puts "setting k5 client to true"
-				library.k5_client = true
-			end
+			# k5_status = get_status(library.client_url)
+			# puts "k5 client status code: #{k5_status}"
+			# if k5_status == '200'
+			# 	puts "setting k5 client to true"
+			# 	library.k5_client = true
+			# end
 
 
 			custom = get_json(api_url + "feed/custom")
@@ -110,18 +110,22 @@ class FeederController < ApplicationController
 			rescue
 			end
 
-			search_page_all_url = api_url + "search?q=fedora.model:page&rows=0"
-			search_page_public_url = api_url + "search?q=fedora.model:page%20AND%20dostupnost:public&rows=0"
-			page_all_docs = get_json(search_page_all_url)
+			last_doc = get_json(api_url + "search?fl=created_date&q=*:*&sort=created_date%20desc&rows=1")
 			begin
-				library.pages_all = page_all_docs["response"]["numFound"]
+				library.last_document_at = DateTime.parse(last_doc["response"]["docs"][0]["created_date"])
 			rescue
 			end
-			page_public_docs = get_json(search_page_public_url)
-			begin
-				library.pages_public = page_public_docs["response"]["numFound"]
-			rescue
-			end
+
+			process_model(library, "page")
+			process_model(library, "monograph")
+			process_model(library, "periodical")
+			process_model(library, "soundrecording")
+			process_model(library, "map")
+			process_model(library, "graphic")
+			process_model(library, "sheetmusic")
+			process_model(library, "archive")
+			process_model(library, "manuscript")
+			process_model(library, "article")
 
 			date = Date.current
 			r = Record.where(library: library, date: date)
@@ -134,6 +138,25 @@ class FeederController < ApplicationController
 			end
 			library.save
 		end
+
+	 def process_model(library, model)
+		prefix = model == "page" ? "pages" : "model_#{model}"
+		base_url = library.search_url
+		api_url = base_url + "api/v5.0/"
+		all_url = api_url + "search?q=fedora.model:#{model}&rows=0"
+		public_url = api_url + "search?q=fedora.model:#{model}%20AND%20dostupnost:public&rows=0"
+		all_docs = get_json(all_url)
+		begin
+			library["#{prefix}_all"] = all_docs["response"]["numFound"]
+		rescue
+		end
+		public_docs = get_json(public_url)
+		begin
+			library["#{prefix}_public"] = public_docs["response"]["numFound"]
+		rescue
+		end
+	 end 
+
 
 
 		def calc_inc(record)

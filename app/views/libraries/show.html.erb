@@ -112,6 +112,44 @@
   <td><%= "#{number_with_delimiter(@library.pages_public, delimiter: " ")}/#{number_with_delimiter(@library.pages_all, delimiter: " ")}" %></td>
 </p>
 <p>
+  <strong>Počet knih (veřejné/všechny):</strong>
+  <td><%= "#{number_with_delimiter(@library.model_monograph_public, delimiter: " ")}/#{number_with_delimiter(@library.model_monograph_all, delimiter: " ")}" %></td>
+</p>
+<p>
+  <strong>Počet periodik (veřejné/všechny):</strong>
+  <td><%= "#{number_with_delimiter(@library.model_periodical_public, delimiter: " ")}/#{number_with_delimiter(@library.model_periodical_all, delimiter: " ")}" %></td>
+</p>
+<p>
+  <strong>Počet map (veřejné/všechny):</strong>
+  <td><%= "#{number_with_delimiter(@library.model_map_public, delimiter: " ")}/#{number_with_delimiter(@library.model_map_all, delimiter: " ")}" %></td>
+</p>
+<p>
+  <strong>Počet grafik (veřejné/všechny):</strong>
+  <td><%= "#{number_with_delimiter(@library.model_graphic_public, delimiter: " ")}/#{number_with_delimiter(@library.model_graphic_all, delimiter: " ")}" %></td>
+</p>
+<p>
+  <strong>Počet zvukových nahrávek (veřejné/všechny):</strong>
+  <td><%= "#{number_with_delimiter(@library.model_soundrecording_public, delimiter: " ")}/#{number_with_delimiter(@library.model_soundrecording_all, delimiter: " ")}" %></td>
+</p>
+<p>
+  <strong>Počet archiválií (veřejné/všechny):</strong>
+  <td><%= "#{number_with_delimiter(@library.model_archive_public, delimiter: " ")}/#{number_with_delimiter(@library.model_archive_all, delimiter: " ")}" %></td>
+</p>
+<p>
+  <strong>Počet hudebnin (veřejné/všechny):</strong>
+  <td><%= "#{number_with_delimiter(@library.model_sheetmusic_public, delimiter: " ")}/#{number_with_delimiter(@library.model_sheetmusic_all, delimiter: " ")}" %></td>
+</p>
+<p>
+  <strong>Počet rukopisů (veřejné/všechny):</strong>
+  <td><%= "#{number_with_delimiter(@library.model_manuscript_public, delimiter: " ")}/#{number_with_delimiter(@library.model_manuscript_all, delimiter: " ")}" %></td>
+</p>
+<p>
+  <strong>Počet článků (veřejné/všechny):</strong>
+  <td><%= "#{number_with_delimiter(@library.model_article_public, delimiter: " ")}/#{number_with_delimiter(@library.model_article_all, delimiter: " ")}" %></td>
+</p>
+
+
+<p>
   <strong>Počet sbírek:</strong>
   <td><%= "#{number_with_delimiter(@library.collections, delimiter: " ")}" %></td>
 </p>

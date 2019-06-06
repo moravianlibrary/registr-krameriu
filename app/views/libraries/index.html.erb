@@ -38,10 +38,20 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
       <th>Verze</th>
       <th>Kramerius</th>
       <th>Uživatelské rozhraní</th>
-      <th class="rk-center" colspan="2">Vybrané</th>
-      <th class="rk-center" colspan="2">Dokumenty</th>
-      <th class="rk-center" colspan="2">Stránky</th>
+      <th class="rk-center" colspan="1">Vybrané</th>
+      <th class="rk-center" colspan="1">Dokumenty</th>
+      <th class="rk-center" colspan="1">Stránky</th>
+      <th class="rk-center" colspan="1">Knihy</th>
+      <th class="rk-center" colspan="1">Periodika</th>
+      <th class="rk-center" colspan="1">Mapy</th>
+      <th class="rk-center" colspan="1">Grafiky</th>
+      <th class="rk-center" colspan="1">Nahrávky</th>
+      <th class="rk-center" colspan="1">Archiválie</th>
+      <th class="rk-center" colspan="1">Hudebniny</th>
+      <th class="rk-center" colspan="1">Rukopisy</th>
+      <th class="rk-center" colspan="1">Články</th>
       <th>Sbírky</th>
+      <th>Poslední přírustek</th>
       <th>OAI Provider</th>
       <th>HTTPS</th>
       <th></th>
@@ -51,13 +61,14 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
   <tbody>
     <% @libraries.each do |library| %>
       <tr class='<%= cycle("odd", "even") %>'>
-        <td>
+
+      <td class="kr-logo">
+        <%= image_tag library.logo.url(:thumb), size: "20x20"%>
+      </td>
+
+        <td class="kr-alive-wrapper">
           <div class="kr-alive <%= library.alive ? "kr-alive-yes" : "kr-alive-no" %>"></div>
         </td>
-        <td>
-          <%= image_tag library.logo.url(:thumb), size: "20x20"%>
-        </td>
-
         <td>
 
           <% if library.k4_client %>
@@ -123,29 +134,46 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
 
 
 
-        <td class="rk-right <%= "rk-text-warn" if library.recommended_public.nil? || library.recommended_public == 0 %>">
-        <strong><%= number_with_delimiter(library.recommended_public, delimiter: " ") || "?" %> </strong>
-        </td>
-        <td class="<%= "rk-text-warn" if library.recommended.nil? || library.recommended == 0 %>">
+        <td class="rk-center <%= "rk-text-warn" if library.recommended_public.nil? || library.recommended_public == 0 %>">
+          <strong><%= number_with_delimiter(library.recommended_public, delimiter: " ") || "?" %> </strong>
+          |
           <%= number_with_delimiter(library.recommended, delimiter: " ") || "?" %>
         </td>
-        <td class="rk-right <%= "rk-text-warn" if library.documents_public.nil? || library.documents_public == 0 %>">
+   
+
+        <td class="rk-center <%= "rk-text-warn" if library.documents_public.nil? || library.documents_public == 0 %>">
           <strong><%= number_with_delimiter(library.documents_public, delimiter: " ") || "?" %> </strong>
-        </td>
-        <td class="<%= "rk-text-warn" if library.documents_all.nil? || library.documents_all == 0 %>">
+          |
           <%= number_with_delimiter(library.documents_all, delimiter: " ") || "?" %>
         </td>
 
 
-        <td class="rk-right <%= "rk-text-warn" if library.pages_public.nil? || library.pages_public == 0 %>">
+
+        <td class="rk-center <%= "rk-text-warn" if library.pages_public.nil? || library.pages_public == 0 %>">
           <strong><%= number_with_delimiter(library.pages_public, delimiter: " ") || "?" %> </strong>
-        </td>
-        <td class="<%= "rk-text-warn" if library.pages_all.nil? || library.pages_all == 0 %>">
+          |
           <%= number_with_delimiter(library.pages_all, delimiter: " ") || "?" %>
         </td>
 
-        <td>
+        <% ["monograph", "periodical", "map", "graphic", "soundrecording", "archive", "sheetmusic", "manuscript", "article"].each do |model| %>
+          <td class="rk-center <%= "rk-text-gray" if library["model_#{model}_public"] == 0 %> <%= "rk-text-warn" if library["model_#{model}_public"].nil? %>">
+            <strong><%= number_with_delimiter(library["model_#{model}_public"], delimiter: " ") || "?" %> </strong>
+            |
+            <%= number_with_delimiter(library["model_#{model}_all"], delimiter: " ") || "?" %>
+          </td>       
+        <% end %>
+
+
+
+
+        <td class="<%= "rk-text-gray" if library.collections == 0 %>">
           <%= number_with_delimiter(library.collections, delimiter: " ") || "?" %>
+        </td>
+
+        <td>
+          <% unless library.last_document_at.nil? %>
+          <%= library.last_document_at.strftime("%d.%m.%Y %M:%M") %> <strong class="rk-text-accent"><%= (Time.now.to_date - library.last_document_at.to_date).to_i %></rk-text-accent>
+          <% end %>
         </td>
 
         <td>

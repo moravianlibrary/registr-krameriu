@@ -17,11 +17,11 @@ Rails.application.routes.draw do
 
   get 'feeder/' => 'feeder#all'
   get 'feeder/reset_clients' => 'feeder#reset_clients'
-  get 'feeder/:code' => 'feeder#library'
+  get 'feeder/:code' => 'feeder#single_library'
   get 'ping/' => 'feeder#ping'
   
   get 'analytics/increments' => 'analytics#increments'
   get 'analytics/data' => 'analytics#data'
-  
+
 
 end

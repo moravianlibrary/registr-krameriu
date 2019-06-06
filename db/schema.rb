@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190606110720) do
+ActiveRecord::Schema.define(version: 20190606131628) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,25 @@ ActiveRecord::Schema.define(version: 20190606110720) do
     t.string "oai_provider"
     t.boolean "alive", default: false
     t.integer "collections"
+    t.integer "model_monograph_all"
+    t.integer "model_monograph_public"
+    t.integer "model_periodical_all"
+    t.integer "model_periodical_public"
+    t.integer "model_soundrecording_all"
+    t.integer "model_soundrecording_public"
+    t.integer "model_map_all"
+    t.integer "model_map_public"
+    t.integer "model_graphic_all"
+    t.integer "model_graphic_public"
+    t.integer "model_sheetmusic_all"
+    t.integer "model_sheetmusic_public"
+    t.integer "model_archive_all"
+    t.integer "model_archive_public"
+    t.integer "model_manuscript_all"
+    t.integer "model_manuscript_public"
+    t.integer "model_article_all"
+    t.integer "model_article_public"
+    t.datetime "last_document_at"
   end
 
   create_table "records", id: :serial, force: :cascade do |t|

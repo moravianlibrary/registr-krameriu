@@ -13,30 +13,40 @@
 		overflow-x: auto;
 	}
 	table {
-		width: 2000px;
+		// width: 2000px;
+		table-layout:fixed;
 		thead {
 			background-color: $color-primary;
     	font-size: 14px;
     	color: #fff;
     	th {
+				white-space: nowrap;
     		padding-top: 5px;
     		padding-bottom: 5px;
 				font-weight: 300;
-				padding:5px;
+				padding: 7px 12px;
     	}
 		}
 		tr {
 			&.even {
 				background-color: #EBF2F5;
+				.kr-logo {
+					background-color: #EBF2F5;
+				}
 			}
 		}
 		td {
-			padding:5px;
+			padding:7px 12px;
+			width: 1px;
+			white-space: nowrap;
 			&.rk-text-warn {
 				color: #DC1818;
 			}
 			.rk-text-accent {
 				color: #111;
+			}
+			&.rk-text-gray {
+				color: #999;
 			}
 			.rk-client-icon {
 				padding: 0px 2px;
@@ -56,6 +66,14 @@
 			}
 			.rk-partial {
 				color:#999;
+			}
+			&.kr-logo {
+				position: absolute;
+				background: #f4f4f4;
+				width: 40px;
+			}
+			&.kr-alive-wrapper {
+				padding-left: 30px;
 			}
 			.kr-alive {
 				width: 12px;
