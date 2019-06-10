@@ -176,7 +176,7 @@ Registr obsahuje <strong><%= @libraries.count %></strong> Krameriů zpřístupň
 
         <td>
           <% unless library.last_document_at.nil? %>
-          <%= library.last_document_at.strftime("%d.%m.%Y %M:%M") %> <strong class="rk-text-accent"><%= (Time.now.to_date - library.last_document_at.to_date).to_i %></rk-text-accent>
+          <%= library.last_document_at.strftime("%d.%m.%Y %H:%M") %> <strong class="rk-text-accent"><%= (Time.now.to_date - library.last_document_at.to_date).to_i %></rk-text-accent>
           <% end %>
         </td>
 
