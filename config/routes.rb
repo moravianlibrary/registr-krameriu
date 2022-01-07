@@ -24,4 +24,10 @@ Rails.application.routes.draw do
   get 'analytics/data' => 'analytics#data'
 
 
+
+  namespace :api, constraints: { format: 'json' }, defaults: { :format => :json } do
+    resources :libraries, only: [:index, :show]
+  end
+
+
 end
