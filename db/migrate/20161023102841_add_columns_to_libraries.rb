@@ -1,4 +1,4 @@
-class AddColumnsToLibraries < ActiveRecord::Migration
+class AddColumnsToLibraries < ActiveRecord::Migration[5.1]
   def change
     add_column :libraries, :web, :string
     add_column :libraries, :name_en, :string

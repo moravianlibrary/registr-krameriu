@@ -1,4 +1,4 @@
-class AddNewColumnsToRecords < ActiveRecord::Migration
+class AddNewColumnsToRecords < ActiveRecord::Migration[5.1]
   def change
     remove_column :records, :which
     remove_column :records, :value

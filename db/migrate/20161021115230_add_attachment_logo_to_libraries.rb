@@ -1,4 +1,4 @@
-class AddAttachmentLogoToLibraries < ActiveRecord::Migration
+class AddAttachmentLogoToLibraries < ActiveRecord::Migration[5.1]
   def self.up
     change_table :libraries do |t|
       t.attachment :logo

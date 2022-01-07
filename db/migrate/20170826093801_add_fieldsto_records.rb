@@ -1,4 +1,4 @@
-class AddFieldstoRecords < ActiveRecord::Migration
+class AddFieldstoRecords < ActiveRecord::Migration[5.1]
   def change
     add_column :records, :inc_documents_all, :integer, default: 0
     add_column :records, :inc_documents_public, :integer, default: 0

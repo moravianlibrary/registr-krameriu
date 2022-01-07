@@ -1,4 +1,4 @@
-class AddWebClientsToLibraries < ActiveRecord::Migration
+class AddWebClientsToLibraries < ActiveRecord::Migration[5.1]
   def change
     add_column :libraries, :k4_client, :boolean, default: true
     add_column :libraries, :k5_client_url, :string

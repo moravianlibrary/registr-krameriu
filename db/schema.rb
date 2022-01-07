@@ -15,13 +15,13 @@ ActiveRecord::Schema.define(version: 20190606131628) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "helpers", id: :serial, force: :cascade do |t|
+  create_table "helpers", force: :cascade do |t|
     t.datetime "last_update"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "libraries", id: :serial, force: :cascade do |t|
+  create_table "libraries", force: :cascade do |t|
     t.string "name"
     t.string "code"
     t.string "url"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20190606131628) do
     t.boolean "k5_client", default: false
     t.string "logo_file_name"
     t.string "logo_content_type"
-    t.integer "logo_file_size"
+    t.bigint "logo_file_size"
     t.datetime "logo_updated_at"
     t.string "web"
     t.string "name_en"
@@ -81,8 +81,8 @@ ActiveRecord::Schema.define(version: 20190606131628) do
     t.datetime "last_document_at"
   end
 
-  create_table "records", id: :serial, force: :cascade do |t|
-    t.integer "library_id"
+  create_table "records", force: :cascade do |t|
+    t.bigint "library_id"
     t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(version: 20190606131628) do
     t.index ["library_id"], name: "index_records_on_library_id"
   end
 
-  create_table "users", id: :serial, force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "login"
     t.string "password_digest"
     t.datetime "created_at", null: false
