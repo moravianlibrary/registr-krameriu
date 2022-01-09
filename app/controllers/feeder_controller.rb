@@ -97,8 +97,8 @@ class FeederController < ApplicationController
 			end
 
 
-			search_all_url = api_url + "search?q=(fedora.model:monograph%20OR%20fedora.model:periodical%20OR%20fedora.model:soundrecording%20OR%20fedora.model:map%20OR%20fedora.model:graphic%20OR%20fedora.model:sheetmusic%20OR%20fedora.model:archive%20OR%20fedora.model:manuscript)&rows=0"
-			search_public_url = api_url + "search?q=(fedora.model:monograph%20OR%20fedora.model:periodical%20OR%20fedora.model:soundrecording%20OR%20fedora.model:map%20OR%20fedora.model:graphic%20OR%20fedora.model:sheetmusic%20OR%20fedora.model:archive%20OR%20fedora.model:manuscript)%20AND%20dostupnost:public&rows=0"
+			search_all_url = api_url + "search?q=(fedora.model:monograph%20OR%20fedora.model:periodical%20OR%20fedora.model:soundrecording%20OR%20fedora.model:map%20OR%20fedora.model:graphic%20OR%20fedora.model:sheetmusic%20OR%20fedora.model:oldprintomnibusvolume%20OR%20fedora.model:archive%20OR%20fedora.model:manuscript)&rows=0"
+			search_public_url = api_url + "search?q=(fedora.model:monograph%20OR%20fedora.model:periodical%20OR%20fedora.model:soundrecording%20OR%20fedora.model:map%20OR%20fedora.model:graphic%20OR%20fedora.model:sheetmusic%20OR%20fedora.model:oldprintomnibusvolume%20OR%20fedora.model:archive%20OR%20fedora.model:manuscript)%20AND%20dostupnost:public&rows=0"
 			all_docs = get_json(search_all_url)
 			begin
 				library.documents_all = all_docs["response"]["numFound"]
@@ -116,16 +116,29 @@ class FeederController < ApplicationController
 			rescue
 			end
 
-			process_model(library, "page")
-			process_model(library, "monograph")
-			process_model(library, "periodical")
-			process_model(library, "soundrecording")
-			process_model(library, "map")
-			process_model(library, "graphic")
-			process_model(library, "sheetmusic")
-			process_model(library, "archive")
-			process_model(library, "manuscript")
-			process_model(library, "article")
+			available_models = [
+				"monograph", "periodical", "soundrecording", "map", "graphic", "sheetmusic", "archive", "manuscript", "article", "periodicalitem", "supplement", "periodicalvolume", "monographunit", "track", "soundunit", "internalpart", "oldprintomnibusvolume", "picture", "page"
+			]
+
+			model_facets_url = library.search_url + "api/v5.0/search?q=*:*&facet=true&facet.mincount=1&facet.field=fedora.model&rows=0"
+			model_facets = get_json(model_facets_url)["facet_counts"]["facet_fields"]["fedora.model"]
+			model_facets.each_with_index do |val, idx|
+				next if idx % 2 == 1 || !available_models.include?(val)
+				count = model_facets[idx + 1]
+				prefix = val == "page" ? "pages" : "model_#{val}"
+				library["#{prefix}_all"] = model_facets[idx + 1]
+				# puts "A:#{prefix} -> #{model_facets[idx + 1]}"
+			end
+
+			model_facets_url = library.search_url + "api/v5.0/search?q=dostupnost:public&facet=true&facet.mincount=1&facet.field=fedora.model&rows=0"
+			model_facets = get_json(model_facets_url)["facet_counts"]["facet_fields"]["fedora.model"]
+			model_facets.each_with_index do |val, idx|
+				next if idx % 2 == 1 || !available_models.include?(val)
+				count = model_facets[idx + 1]
+				prefix = val == "page" ? "pages" : "model_#{val}"
+				library["#{prefix}_public"] = model_facets[idx + 1]
+				# puts "P:#{prefix} -> #{model_facets[idx + 1]}"
+			end
 
 			date = Date.current
 			r = Record.where(library: library, date: date)
@@ -138,26 +151,6 @@ class FeederController < ApplicationController
 			end
 			library.save
 		end
-
-	 def process_model(library, model)
-		prefix = model == "page" ? "pages" : "model_#{model}"
-		base_url = library.search_url
-		api_url = base_url + "api/v5.0/"
-		all_url = api_url + "search?q=fedora.model:#{model}&rows=0"
-		public_url = api_url + "search?q=fedora.model:#{model}%20AND%20dostupnost:public&rows=0"
-		all_docs = get_json(all_url)
-		begin
-			library["#{prefix}_all"] = all_docs["response"]["numFound"]
-		rescue
-		end
-		public_docs = get_json(public_url)
-		begin
-			library["#{prefix}_public"] = public_docs["response"]["numFound"]
-		rescue
-		end
-	 end 
-
-
 
 		def calc_inc(record)
 			library = record.library

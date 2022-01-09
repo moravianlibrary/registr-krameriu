@@ -3,7 +3,7 @@ class Api::LibrariesController < Api::ApiController
   def index
     result = []
     Library.all.each do |library|
-      result << {
+      item = {
         id: library.id,
         code: library.code,
         sigla: library.sigla,
@@ -22,28 +22,11 @@ class Api::LibrariesController < Api::ApiController
         documents_public: library.documents_public,
         pages_all: library.pages_all,
         pages_public: library.pages_public,
-        model_monograph_all: library.model_monograph_all,
-        model_monograph_public: library.model_monograph_public,
-        model_periodical_all: library.model_periodical_all,
-        model_periodical_public: library.model_periodical_public,
-        model_map_all: library.model_map_all,
-        model_map_public: library.model_map_public,
-        model_graphic_all: library.model_graphic_all,
-        model_graphic_public: library.model_graphic_public,
-        model_soundrecording_all: library.model_soundrecording_all,
-        model_soundrecording_public: library.model_soundrecording_public,
-        model_archive_all: library.model_archive_all,
-        model_archive_public: library.model_archive_public,
-        model_sheetmusic_all: library.model_sheetmusic_all,
-        model_sheetmusic_public: library.model_sheetmusic_public,
-        model_manuscript_all: library.model_manuscript_all,
-        model_manuscript_public: library.model_manuscript_public,
-        model_article_all: library.model_article_all,
-        model_article_public: library.model_article_public,
-
         created_at: library.created_at,
         updated_at: library.updated_at
       }
+      add_models(item, library)
+      result << item
     end
     render json: result
   end
@@ -69,7 +52,6 @@ class Api::LibrariesController < Api::ApiController
       zip: library.zip,
       latitude: library.latitude,
       longitude: library.longitude,
-
       collections: library.collections,
       recommended_all: library.recommended,
       recommended_public: library.recommended_public,
@@ -77,29 +59,25 @@ class Api::LibrariesController < Api::ApiController
       documents_public: library.documents_public,
       pages_all: library.pages_all,
       pages_public: library.pages_public,
-      model_monograph_all: library.model_monograph_all,
-      model_monograph_public: library.model_monograph_public,
-      model_periodical_all: library.model_periodical_all,
-      model_periodical_public: library.model_periodical_public,
-      model_map_all: library.model_map_all,
-      model_map_public: library.model_map_public,
-      model_graphic_all: library.model_graphic_all,
-      model_graphic_public: library.model_graphic_public,
-      model_soundrecording_all: library.model_soundrecording_all,
-      model_soundrecording_public: library.model_soundrecording_public,
-      model_archive_all: library.model_archive_all,
-      model_archive_public: library.model_archive_public,
-      model_sheetmusic_all: library.model_sheetmusic_all,
-      model_sheetmusic_public: library.model_sheetmusic_public,
-      model_manuscript_all: library.model_manuscript_all,
-      model_manuscript_public: library.model_manuscript_public,
-      model_article_all: library.model_article_all,
-      model_article_public: library.model_article_public,
-
       created_at: library.created_at,
       updated_at: library.updated_at
     }
+    add_models(result, library)
     render json: result
   end
+
+  private 
+    def add_models(item, library)
+      available_models = [
+				"monograph", "periodical", "soundrecording", "map", "graphic", "sheetmusic", "archive", "manuscript", "article", "periodicalitem", "supplement", "periodicalvolume", "monographunit", "track", "soundunit", "internalpart", "oldprintomnibusvolume", "picture", "page"
+			]
+      available_models.each do |model|
+        prefix = model == "page" ? "pages" : "model_#{model}"
+        all = "#{prefix}_all"
+        pub = "#{prefix}_public"
+        item[all] = library[all] || 0
+        item[pub] = library[pub] || 0
+      end
+    end
 
 end

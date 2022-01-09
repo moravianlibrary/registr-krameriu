@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190606131628) do
+ActiveRecord::Schema.define(version: 20220109131459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,24 @@ ActiveRecord::Schema.define(version: 20190606131628) do
     t.integer "model_article_all"
     t.integer "model_article_public"
     t.datetime "last_document_at"
+    t.integer "model_periodicalitem_all"
+    t.integer "model_periodicalitem_public"
+    t.integer "model_supplement_all"
+    t.integer "model_supplement_public"
+    t.integer "model_periodicalvolume_all"
+    t.integer "model_periodicalvolume_public"
+    t.integer "model_monographunit_all"
+    t.integer "model_monographunit_public"
+    t.integer "model_track_all"
+    t.integer "model_track_public"
+    t.integer "model_soundunit_all"
+    t.integer "model_soundunit_public"
+    t.integer "model_internalpart_all"
+    t.integer "model_internalpart_public"
+    t.integer "model_oldprintomnibusvolume_all"
+    t.integer "model_oldprintomnibusvolume_public"
+    t.integer "model_picture_all"
+    t.integer "model_picture_public"
   end
 
   create_table "records", force: :cascade do |t|
