@@ -48,6 +48,7 @@ class FeederController < ApplicationController
 		def update_library(library)
 			base_url = library.search_url
 			api_url = base_url + "api/v5.0/"
+			api_url = library.url + "/catalogue/" if library.code == 'snk'
 			info = get_json(api_url + "info")
 			library.alive = false
 			if info
@@ -122,7 +123,7 @@ class FeederController < ApplicationController
 			]
 
 			begin
-				model_facets_url = library.search_url + "api/v5.0/search?q=*:*&facet=true&facet.mincount=1&facet.field=fedora.model&rows=0"
+				model_facets_url = api_url + "search?q=*:*&facet=true&facet.mincount=1&facet.field=fedora.model&rows=0"
 				model_facets = get_json(model_facets_url)["facet_counts"]["facet_fields"]["fedora.model"]
 				model_facets.each_with_index do |val, idx|
 					next if idx % 2 == 1 || !available_models.include?(val)
@@ -132,7 +133,7 @@ class FeederController < ApplicationController
 					# puts "A:#{prefix} -> #{model_facets[idx + 1]}"
 				end
 
-				model_facets_url = library.search_url + "api/v5.0/search?q=dostupnost:public&facet=true&facet.mincount=1&facet.field=fedora.model&rows=0"
+				model_facets_url = api_url + "search?q=dostupnost:public&facet=true&facet.mincount=1&facet.field=fedora.model&rows=0"
 				model_facets = get_json(model_facets_url)["facet_counts"]["facet_fields"]["fedora.model"]
 				model_facets.each_with_index do |val, idx|
 					next if idx % 2 == 1 || !available_models.include?(val)
