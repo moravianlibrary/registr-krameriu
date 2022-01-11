@@ -72,7 +72,7 @@ class Api::LibrariesController < Api::ApiController
 				"monograph", "periodical", "soundrecording", "map", "graphic", "sheetmusic", "archive", "manuscript", "article", "periodicalitem", "supplement", "periodicalvolume", "monographunit", "track", "soundunit", "internalpart", "oldprintomnibusvolume", "picture", "page"
 			]
       available_models.each do |model|
-        prefix = model == "page" ? "pages" : "model_#{model}"
+        prefix = "model_#{model}"
         all = "#{prefix}_all"
         pub = "#{prefix}_public"
         item[all] = library[all] || 0
