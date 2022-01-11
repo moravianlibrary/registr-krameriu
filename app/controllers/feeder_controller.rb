@@ -67,6 +67,7 @@ class FeederController < ApplicationController
 					end
 				end
 			end
+			library.save and return if !library.alive
 
 			vc = get_json(api_url + "vc")
 			library.collections = vc.length unless vc.nil?
@@ -120,26 +121,28 @@ class FeederController < ApplicationController
 				"monograph", "periodical", "soundrecording", "map", "graphic", "sheetmusic", "archive", "manuscript", "article", "periodicalitem", "supplement", "periodicalvolume", "monographunit", "track", "soundunit", "internalpart", "oldprintomnibusvolume", "picture", "page"
 			]
 
-			model_facets_url = library.search_url + "api/v5.0/search?q=*:*&facet=true&facet.mincount=1&facet.field=fedora.model&rows=0"
-			model_facets = get_json(model_facets_url)["facet_counts"]["facet_fields"]["fedora.model"]
-			model_facets.each_with_index do |val, idx|
-				next if idx % 2 == 1 || !available_models.include?(val)
-				count = model_facets[idx + 1]
-				prefix = val == "page" ? "pages" : "model_#{val}"
-				library["#{prefix}_all"] = model_facets[idx + 1]
-				# puts "A:#{prefix} -> #{model_facets[idx + 1]}"
-			end
+			begin
+				model_facets_url = library.search_url + "api/v5.0/search?q=*:*&facet=true&facet.mincount=1&facet.field=fedora.model&rows=0"
+				model_facets = get_json(model_facets_url)["facet_counts"]["facet_fields"]["fedora.model"]
+				model_facets.each_with_index do |val, idx|
+					next if idx % 2 == 1 || !available_models.include?(val)
+					count = model_facets[idx + 1]
+					prefix = val == "page" ? "pages" : "model_#{val}"
+					library["#{prefix}_all"] = model_facets[idx + 1]
+					# puts "A:#{prefix} -> #{model_facets[idx + 1]}"
+				end
 
-			model_facets_url = library.search_url + "api/v5.0/search?q=dostupnost:public&facet=true&facet.mincount=1&facet.field=fedora.model&rows=0"
-			model_facets = get_json(model_facets_url)["facet_counts"]["facet_fields"]["fedora.model"]
-			model_facets.each_with_index do |val, idx|
-				next if idx % 2 == 1 || !available_models.include?(val)
-				count = model_facets[idx + 1]
-				prefix = val == "page" ? "pages" : "model_#{val}"
-				library["#{prefix}_public"] = model_facets[idx + 1]
-				# puts "P:#{prefix} -> #{model_facets[idx + 1]}"
+				model_facets_url = library.search_url + "api/v5.0/search?q=dostupnost:public&facet=true&facet.mincount=1&facet.field=fedora.model&rows=0"
+				model_facets = get_json(model_facets_url)["facet_counts"]["facet_fields"]["fedora.model"]
+				model_facets.each_with_index do |val, idx|
+					next if idx % 2 == 1 || !available_models.include?(val)
+					count = model_facets[idx + 1]
+					prefix = val == "page" ? "pages" : "model_#{val}"
+					library["#{prefix}_public"] = model_facets[idx + 1]
+					# puts "P:#{prefix} -> #{model_facets[idx + 1]}"
+				end
+			rescue
 			end
-
 			date = Date.current
 			r = Record.where(library: library, date: date)
 			if(r.blank?)
