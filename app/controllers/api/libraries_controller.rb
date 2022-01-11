@@ -69,7 +69,7 @@ class Api::LibrariesController < Api::ApiController
   private 
     def add_models(item, library)
       available_models = [
-				"monograph", "periodical", "soundrecording", "map", "graphic", "sheetmusic", "archive", "manuscript", "article", "periodicalitem", "supplement", "periodicalvolume", "monographunit", "track", "soundunit", "internalpart", "oldprintomnibusvolume", "picture", "page"
+				"monograph", "periodical", "soundrecording", "map", "graphic", "sheetmusic", "archive", "manuscript", "article", "periodicalitem", "supplement", "periodicalvolume", "monographunit", "track", "soundunit", "internalpart", "oldprintomnibusvolume", "picture"
 			]
       available_models.each do |model|
         prefix = "model_#{model}"
