@@ -17,7 +17,6 @@ class Api::ApiController < ApplicationController
     end
 
     def skip_session
-    response.set_header('HEADER NAME', 'HEADER VALUE')
       request.session_options[:skip] = true
     end
 
