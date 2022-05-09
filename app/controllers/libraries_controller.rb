@@ -53,29 +53,26 @@ class LibrariesController < ApplicationController
   # POST /libraries.json
   def create
     @library = Library.new(library_params)
-
-    respond_to do |format|
-      if @library.save
-        format.html { redirect_to @library, notice: 'Knihovna byla vytvořena.' }
-        format.json { render :show, status: :created, location: @library }
-      else
-        format.html { render :new }
-        format.json { render json: @library.errors, status: :unprocessable_entity }
-      end
+    if @library.save
+      redirect_to "/feeder/#{@library.code}" 
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /libraries/1
   # PATCH/PUT /libraries/1.json
   def update
-    respond_to do |format|
-      if @library.update(library_params)
-        format.html { redirect_to @library, notice: 'Knihovna byla upravena.' }
-        format.json { render :show, status: :ok, location: @library }
+    old_url = @library.url
+    old_client_url = @library.new_client_url
+    if @library.update(library_params)
+      if old_url != @library.url || old_client_url != @library.new_client_url
+        redirect_to "/feeder/#{@library.code}" 
       else
-        format.html { render :edit }
-        format.json { render json: @library.errors, status: :unprocessable_entity }
+        redirect_to @library, notice: 'Knihovna byla upravena.'
       end
+    else
+      render :edit
     end
   end
 
