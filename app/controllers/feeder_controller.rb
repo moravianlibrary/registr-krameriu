@@ -46,6 +46,19 @@ class FeederController < ApplicationController
 	private
 
 		def update_library(library)
+			if library.new_client_url
+				client_version = "-"
+				t = get_text(library.new_client_url)
+				if t
+					vv = t.match(/\/globals.js\?v(.*)\"/)
+					if vv
+						client_version = vv[1]
+					end
+				end
+				library.new_client_version = client_version
+			else
+				library.new_client_version = nil
+			end
 			base_url = library.search_url
 			api_url = base_url + "api/v5.0/"
 			api_url = library.url + "/catalogue/" if library.code == 'snk'
