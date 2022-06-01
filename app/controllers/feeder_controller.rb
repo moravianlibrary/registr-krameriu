@@ -200,8 +200,8 @@ class FeederController < ApplicationController
 			request = Net::HTTP::Get.new(uri, initheader = {'Content-Type' =>'application/json', 'Accept-Language' => 'cs-CZ', 'Accept' =>'application/json'})
 			begin
 				http.request(request)
-			rescue
-				nil
+			rescue Exception => e 
+				puts "err #{e}"
 			end
 		end
 
