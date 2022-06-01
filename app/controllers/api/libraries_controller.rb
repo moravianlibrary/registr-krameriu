@@ -32,7 +32,8 @@ class Api::LibrariesController < Api::ApiController
         created_at: library.created_at,
         updated_at: library.updated_at,
         last_document_at: library.last_document_at,
-        last_document_before: library.last_document_at.nil? ? nil : ((Time.now.to_date - library.last_document_at.to_date).to_i)
+        last_document_before: library.last_document_at.nil? ? nil : ((Time.now.to_date - library.last_document_at.to_date).to_i),
+        licenses: library.licenses.nil? ? [] : JSON.parse(library.licenses)
       }
       add_models(item, library)
       result << item
@@ -72,7 +73,8 @@ class Api::LibrariesController < Api::ApiController
       created_at: library.created_at,
       updated_at: library.updated_at,
       last_document_at: library.last_document_at,
-      last_document_before: library.last_document_at.nil? ? nil : ((Time.now.to_date - library.last_document_at.to_date).to_i)
+      last_document_before: library.last_document_at.nil? ? nil : ((Time.now.to_date - library.last_document_at.to_date).to_i),
+      licenses: library.licenses.nil? ? [] : JSON.parse(library.licenses)
     }
     add_models(result, library)
     render json: result

@@ -157,6 +157,19 @@ class FeederController < ApplicationController
 				end
 			rescue
 			end
+			licenses = []
+			begin
+				license_facets_url = api_url + "search?q=*:*&facet=true&facet.mincount=1&facet.field=dnnt-labels&rows=0"
+				license_facets = get_json(license_facets_url)["facet_counts"]["facet_fields"]["dnnt-labels"]
+				license_facets.each_with_index do |val, idx|
+					next if idx % 2 == 1
+					count = license_facets[idx + 1]
+					l = { id: val, count: count }
+					licenses << l
+				end
+			rescue
+			end
+			library.licenses = licenses.to_json.to_s
 			date = Date.current
 			r = Record.where(library: library, date: date)
 			if(r.blank?)
