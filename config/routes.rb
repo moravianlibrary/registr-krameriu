@@ -26,7 +26,11 @@ Rails.application.routes.draw do
 
 
   namespace :api, constraints: { format: 'json' }, defaults: { :format => :json } do
-    resources :libraries, only: [:index, :show]
+    resources :libraries, only: [:index, :show] do
+      member do
+        get "history"
+      end
+    end
   end
 
 

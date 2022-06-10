@@ -42,6 +42,26 @@ class Api::LibrariesController < Api::ApiController
   end
 
 
+  def history
+    result = []
+    library = Library.find_by(code: params[:id])
+    library.records.order(date: :desc).each do |record|
+      result << {
+        date: record.date,
+        documents_all: record.documents_all,
+        inc_documents_all: record.inc_documents_all,
+        documents_public: record.documents_public,
+        inc_documents_public: record.inc_documents_public,
+        pages_all: record.pages_all,
+        inc_pages_all: record.inc_pages_all,
+        pages_public: record.pages_public,
+        inc_pages_public: record.inc_pages_public,
+        version: record.version
+      }
+    end
+    render json: result
+  end
+
   def show
     library = Library.find_by(code: params[:id])
     result = {
