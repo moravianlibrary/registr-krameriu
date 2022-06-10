@@ -1,7 +1,7 @@
 <%= form_for @library, html: { multipart: true } do |f| %>
   <% if @library.errors.any? %>
-    <div id="error_explanation">
-      <h4><%= pluralize(@library.errors.count, "error") %> prohibited this library from being saved:</h4>
+    <div id="error_explanation" style="background: #ffc0c0; padding: 8px 16px; border-radius: 10px; margin-bottom: 20px;">
+      <h4>Nevalidní záznam</h4>
 
       <ul>
       <% @library.errors.full_messages.each do |message| %>
@@ -31,9 +31,10 @@
     <%= f.text_field :sigla, class: 'form-control' %>
   </div>
 
+
   <div class="form-group">
     <%= f.label :code, "Identifikátor Kraméria" %><br>
-    <%= f.text_field :code, class: 'form-control' %>
+    <%= f.text_field :code, class: 'form-control', disabled: @is_edit %>
   </div>
 
   <div class="form-group">

@@ -129,3 +129,10 @@
 		}
 	}
 }
+
+
+.edit_library, .new_library {
+	.field_with_errors {
+		display: inline;
+	}
+}

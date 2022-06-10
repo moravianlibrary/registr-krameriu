@@ -39,6 +39,7 @@ class LibrariesController < ApplicationController
 
   # GET /libraries/1/edit
   def edit
+    @is_edit = true
   end
 
   def logo
@@ -72,6 +73,7 @@ class LibrariesController < ApplicationController
         redirect_to @library, notice: 'Knihovna byla upravena.'
       end
     else
+      @is_edit = true
       render :edit
     end
   end

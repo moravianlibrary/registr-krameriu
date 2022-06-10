@@ -1,7 +1,10 @@
 class Library < ActiveRecord::Base
   before_save :refine_url
-	before_save :normalize_blank_values
+  before_save :normalize_blank_values
   has_many :records, dependent: :destroy
+  validates :code, presence: true, allow_blank: false
+  validates :name, presence: true, allow_blank: false
+  validates :url, presence: true, allow_blank: false
 
   has_attached_file :logo, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png"
   validates_attachment_content_type :logo, content_type: /\Aimage\/.*\z/
