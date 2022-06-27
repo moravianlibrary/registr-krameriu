@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220601125942) do
+ActiveRecord::Schema.define(version: 20220627132813) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,8 +93,8 @@ ActiveRecord::Schema.define(version: 20220601125942) do
     t.integer "model_soundunit_public"
     t.integer "model_internalpart_all"
     t.integer "model_internalpart_public"
-    t.integer "model_oldprintomnibusvolume_all"
-    t.integer "model_oldprintomnibusvolume_public"
+    t.integer "model_convolute_all"
+    t.integer "model_convolute_public"
     t.integer "model_picture_all"
     t.integer "model_picture_public"
     t.string "new_client_version"
