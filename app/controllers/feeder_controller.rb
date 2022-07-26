@@ -64,6 +64,21 @@ class FeederController < ApplicationController
 			api_url = library.url + "/catalogue/" if library.code == 'snk'
 			info = get_json(api_url + "info")
 			library.alive = false
+			
+			if !info || (info["version"] && info["version"].start_with?("7"))
+				api_url = base_url + "api/client/v7.0/"
+				info = get_json(api_url + "info")
+				if info
+					library.version = info["version"]
+					library.email = info["email"]
+					library.right_msg = info["rightMsg"]
+					library.pdf_max = info["pdfMaxRange"]
+					library.alive = true
+					updateK7(library, api_url)
+					return
+				end
+			end
+
 			if info
 				library.version = info["version"]
 				library.email = info["email"]
@@ -71,7 +86,8 @@ class FeederController < ApplicationController
 				library.right_msg = info["rightMsg"]
 				library.pdf_max = info["pdfMaxRange"]
 				library.alive = true
-			else
+			end
+			if !info
 				t = get_text(base_url)
 				if t
 					vv = t.match(/version: (.*), /)
@@ -159,7 +175,7 @@ class FeederController < ApplicationController
 			end
 			licenses = []
 			begin
-				license_facets_url = api_url + "search?q=*:*&facet=true&facet.mincount=1&facet.field=dnnt-labels&rows=0"
+				license_facets_url = api_url + "search?q=fedora.model:page&facet=true&facet.mincount=1&facet.field=dnnt-labels&rows=0"
 				license_facets = get_json(license_facets_url)["facet_counts"]["facet_fields"]["dnnt-labels"]
 				license_facets.each_with_index do |val, idx|
 					next if idx % 2 == 1
@@ -181,6 +197,105 @@ class FeederController < ApplicationController
 			end
 			library.save
 		end
+
+
+		def updateK7(library, api_url)
+			toplevel_models = [ "monograph", "periodical", "soundrecording", "map", "graphic", "sheetmusic", "archive", "manuscript", "convolute"]
+			query = "(model:#{toplevel_models.join("%20OR%20model:")})"
+			search_all_url = api_url + "search?q=#{query}&rows=0"
+			search_public_url = api_url + "search?q=#{query}%20AND%20accessibility:public&rows=0"
+			all_docs = get_json(search_all_url)
+			begin
+				library.documents_all = all_docs["response"]["numFound"]
+			rescue
+			end
+			public_docs = get_json(search_public_url)
+			begin
+				library.documents_public = public_docs["response"]["numFound"]
+			rescue
+			end
+
+			last_doc = get_json(api_url + "search?fl=created&q=*:*&sort=created%20desc&rows=1")
+			begin
+				library.last_document_at = DateTime.parse(last_doc["response"]["docs"][0]["created"])
+			rescue
+			end
+
+			available_models = [
+				"monograph", "periodical", "soundrecording", "map", "graphic", "sheetmusic", "archive", "manuscript", "article", "periodicalitem", "supplement", "periodicalvolume", "monographunit", "track", "soundunit", "internalpart", "convolute", "picture", "page"
+			]
+			begin
+				model_facets_url = api_url + "search?q=*:*&facet=true&facet.mincount=1&facet.field=model&rows=0"
+				model_facets = get_json(model_facets_url)["facet_counts"]["facet_fields"]["model"]
+				model_facets.each_with_index do |val, idx|
+					next if idx % 2 == 1 || !available_models.include?(val)
+					count = model_facets[idx + 1]
+					prefix = val == "page" ? "pages" : "model_#{val}"
+					library["#{prefix}_all"] = model_facets[idx + 1]
+					# puts "A:#{prefix} -> #{model_facets[idx + 1]}"
+				end
+
+				model_facets_url = api_url + "search?q=accessibility:public&facet=true&facet.mincount=1&facet.field=model&rows=0"
+				model_facets = get_json(model_facets_url)["facet_counts"]["facet_fields"]["model"]
+				model_facets.each_with_index do |val, idx|
+					next if idx % 2 == 1 || !available_models.include?(val)
+					count = model_facets[idx + 1]
+					prefix = val == "page" ? "pages" : "model_#{val}"
+					library["#{prefix}_public"] = model_facets[idx + 1]
+					# puts "P:#{prefix} -> #{model_facets[idx + 1]}"
+				end
+			rescue
+			end
+
+			collections_url = api_url + "search?q=model:collection&rows=0"
+			collections = get_json(collections_url)
+			begin
+				library.collections	 = collections["response"]["numFound"]
+			rescue
+			end
+
+			licenses = []
+			begin
+				lmap = {}
+				llist = []
+				license_facets_url = api_url + "search?q=model:page&facet=true&facet.mincount=1&facet.field=licenses_of_ancestors&rows=0"
+				license_facets = get_json(license_facets_url)["facet_counts"]["facet_fields"]["licenses_of_ancestors"]
+				license_facets.each_with_index do |val, idx|
+					next if idx % 2 == 1
+					count = license_facets[idx + 1]
+					lmap[val] = count
+					llist << val
+				end
+				license_facets_url = api_url + "search?q=model:page&facet=true&facet.mincount=1&facet.field=licenses&rows=0"
+				license_facets = get_json(license_facets_url)["facet_counts"]["facet_fields"]["licenses"]
+				license_facets.each_with_index do |val, idx|
+					next if idx % 2 == 1
+					count = license_facets[idx + 1]
+					if llist.include?(val)
+						lmap[val] += count
+					else
+						lmap[val] = count
+						llist << val
+					end
+				end
+				llist.each do |l|
+					licenses << { id: l, count: lmap[l] }
+				end
+			rescue
+			end
+			library.licenses = licenses.to_json.to_s
+			date = Date.current
+			r = Record.where(library: library, date: date)
+			if(r.blank?)
+				r = Record.create(library: library, date: date, documents_all: library.documents_all, documents_public: library.documents_public, pages_all: library.pages_all, pages_public: library.pages_public, version: library.version)
+				calc_inc(r)
+			else
+				r.first.update(documents_all: library.documents_all, documents_public: library.documents_public, pages_all: library.pages_all, pages_public: library.pages_public, version: library.version)
+				calc_inc(r.first)
+			end
+			library.save
+		end
+
 
 		def calc_inc(record)
 			library = record.library
