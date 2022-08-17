@@ -6,10 +6,10 @@ require 'json'
 class Processes
 
     def self.check_state
-      puts "#{Time.now}"
+      start = Time.now
+      # puts "#{start}"
       Library.all.each do |library|
-        puts "#{Time.now}: #{library.name}"
-
+        # puts "#{Time.now}: #{library.name}"
         last_alive = library.alive
         library.alive = false
         base_url = library.search_url
@@ -40,19 +40,19 @@ class Processes
         library.save
         if last_alive != library.alive || State.where(library: library).count == 0
           value = library.alive ? 1 : 0
-          puts "-- updating state of #{library.name} to #{value}"
+          puts "#{Time.now}: updating state of #{library.name} to #{value}"
           library.update(last_state_switch: Time.now)
           State.create(library: library, at: Time.now, value: value)
         end
       end
-      puts "#{Time.now}"
+      puts "#{Time.now}: time #{(Time.now - start).to_i}"
     end
 
 
     private
 
 		def self.get_response(url)
-			puts url
+			# puts url
 			uri = URI.parse(url)
 			http = Net::HTTP.new(uri.host, uri.port)
 			http.read_timeout = 5
@@ -65,7 +65,7 @@ class Processes
 			begin
 				http.request(request)
 			rescue Exception => e 
-				puts "err #{e}"
+				puts "#{Time.now}: #{url}, err #{e}"
 			end
 		end
 
