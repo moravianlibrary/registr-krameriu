@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220817131433) do
+ActiveRecord::Schema.define(version: 20220817144435) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 20220817131433) do
     t.integer "model_picture_public"
     t.string "new_client_version"
     t.string "licenses"
+    t.datetime "last_state_switch"
   end
 
   create_table "records", id: :serial, force: :cascade do |t|

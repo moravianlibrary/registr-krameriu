@@ -41,6 +41,7 @@ class Processes
         if last_alive != library.alive || State.where(library: library).count == 0
           value = library.alive ? 1 : 0
           puts "-- updating state of #{library.name} to #{value}"
+          Library.update(last_state_switch: Time.now)
           State.create(library: library, at: Time.now, value: value)
         end
       end

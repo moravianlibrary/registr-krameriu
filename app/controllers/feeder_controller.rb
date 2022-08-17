@@ -63,8 +63,8 @@ class FeederController < ApplicationController
 			api_url = base_url + "api/v5.0/"
 			api_url = library.url + "/catalogue/" if library.code == 'snk'
 			info = get_json(api_url + "info")
-			library.alive = false
-			
+			# library.alive = false
+			alive = false
 			if !info || (info["version"] && info["version"].start_with?("7"))
 				api_url = base_url + "api/client/v7.0/"
 				info = get_json(api_url + "info")
@@ -73,7 +73,7 @@ class FeederController < ApplicationController
 					library.email = info["email"]
 					library.right_msg = info["rightMsg"]
 					library.pdf_max = info["pdfMaxRange"]
-					library.alive = true
+					# library.alive = true
 					updateK7(library, api_url)
 					return
 				end
@@ -85,7 +85,8 @@ class FeederController < ApplicationController
 				library.intro = info["intro"]
 				library.right_msg = info["rightMsg"]
 				library.pdf_max = info["pdfMaxRange"]
-				library.alive = true
+				# library.alive = true
+				alive = true
 			end
 			if !info
 				t = get_text(base_url)
@@ -93,11 +94,12 @@ class FeederController < ApplicationController
 					vv = t.match(/version: (.*), /)
 					if vv
 						library.version = vv[1]
-						library.alive = true
+						# library.alive = true
+						alive = true
 					end
 				end
 			end
-			library.save and return if !library.alive
+			library.save and return if !alive
 
 			vc = get_json(api_url + "vc")
 			library.collections = vc.length unless vc.nil?
