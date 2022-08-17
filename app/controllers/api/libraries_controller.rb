@@ -8,7 +8,7 @@ class Api::LibrariesController < Api::ApiController
           code: library.code,
           alive: !!library.alive,
           last_state_switch: library.last_state_switch,
-          state_duration: (Time.now - library.last_state_switch).to_i
+          state_duration: (Time.now - (library.last_state_switch || Time.now)).to_i
         }
       else 
         item = {
@@ -19,7 +19,7 @@ class Api::LibrariesController < Api::ApiController
           name_en: library.name_en,
           alive: !!library.alive,
           last_state_switch: library.last_state_switch,
-          state_duration: (Time.now - library.last_state_switch).to_i,
+          state_duration: (Time.now - (library.last_state_switch || Time.now)).to_i,
           version: library.version,
           url: library.url,
           new_client_url: library.new_client_url,
@@ -83,7 +83,7 @@ class Api::LibrariesController < Api::ApiController
       name_en: library.name_en,
       alive: !!library.alive,
       last_state_switch: library.last_state_switch,
-      state_duration: (Time.now - library.last_state_switch).to_i,
+      state_duration: (Time.now - (library.last_state_switch || Time.now)).to_i,
       version: library.version,
       url: library.url,
       new_client_url: library.new_client_url,
