@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220627132813) do
+ActiveRecord::Schema.define(version: 20220817131433) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,13 @@ ActiveRecord::Schema.define(version: 20220627132813) do
     t.index ["library_id"], name: "index_records_on_library_id"
   end
 
+  create_table "states", force: :cascade do |t|
+    t.bigint "library_id"
+    t.integer "value"
+    t.datetime "at"
+    t.index ["library_id"], name: "index_states_on_library_id"
+  end
+
   create_table "users", id: :serial, force: :cascade do |t|
     t.string "login"
     t.string "password_digest"
@@ -126,4 +133,5 @@ ActiveRecord::Schema.define(version: 20220627132813) do
   end
 
   add_foreign_key "records", "libraries"
+  add_foreign_key "states", "libraries"
 end
