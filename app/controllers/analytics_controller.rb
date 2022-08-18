@@ -78,8 +78,6 @@ class AnalyticsController < ApplicationController
         "pages_public": pages_public.values,
         "documents_public": documents_public.values,
         "pages_all": pages_all.values,
-        "pages_public": pages_public.values,
-
         "overall_documents_all": overall_documents_all,
         "overall_documents_public": overall_documents_public,
         "overall_pages_all": overall_pages_all,
