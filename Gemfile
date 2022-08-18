@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem "bootstrap-sass", ">= 3.4.1"
 
-gem 'rails', '~> 5.1.5'
+gem 'rails', '~> 5.2.5'
 gem 'sass-rails'
 gem 'uglifier'
 
