@@ -11,8 +11,20 @@ class Api::StatesController < Api::ApiController
     elsif params[:int] == "24h"
       from = Time.now - 24.hours
       to = Time.now
+    elsif params[:int] == "2d"
+      from = Time.now - 2.days
+      to = Time.now
+    elsif params[:int] == "3d"
+      from = Time.now - 3.days
+      to = Time.now
+    elsif params[:int] == "5d"
+      from = Time.now - 5.days
+      to = Time.now
     elsif params[:int] == "7d"
       from = Time.now - 7.days
+      to = Time.now
+    elsif params[:int] == "10d"
+      from = Time.now - 10.days
       to = Time.now
     elsif params[:int] == "1m"
       from = Time.now - 1.month
