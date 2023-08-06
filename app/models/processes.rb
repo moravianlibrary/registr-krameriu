@@ -45,8 +45,16 @@ class Processes
         value = library.alive ? 1 : 0
         puts "#{Time.now}: updating state of #{library.name} to #{value}"
         library.last_state_switch = Time.now
-        library.outage_warning_counter = 0 if library.alive
         State.create(library: library, at: Time.now, value: value)
+        if library.alive 
+          if library.outage_warning_counter >= 3
+            library.outage_warning_emails.split(",").each do |email|
+              puts "#{Time.now}: sending outage end info for #{library.name} to #{email}"
+              NotificationMailer.send_outage_end_info(email, library).deliver_now
+            end
+          end
+          library.outage_warning_counter = 0
+        end
       end
 
       if !library.alive
