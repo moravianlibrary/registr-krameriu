@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220817144435) do
+ActiveRecord::Schema.define(version: 2023_08_06_155147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,8 @@ ActiveRecord::Schema.define(version: 20220817144435) do
     t.string "new_client_version"
     t.string "licenses"
     t.datetime "last_state_switch"
+    t.integer "outage_warning_counter", default: 0
+    t.string "outage_warning_emails", default: ""
   end
 
   create_table "records", id: :serial, force: :cascade do |t|

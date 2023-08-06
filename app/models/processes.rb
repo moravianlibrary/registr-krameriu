@@ -7,46 +7,63 @@ class Processes
 
     def self.check_state
       start = Time.now
-      # puts "#{start}"
       Library.all.each do |library|
-        # puts "#{Time.now}: #{library.name}"
-        last_alive = library.alive
-        library.alive = false
-        base_url = library.search_url
-        api_url = base_url + "api/v5.0/"
-        api_url = library.url + "/catalogue/" if library.code == 'snk'
-        k5info = Processes.get_json(api_url + "info")
-        if !k5info || (k5info["version"] && k5info["version"].start_with?("7"))
-          api_url = base_url + "api/client/v7.0/"
-          k7info = Processes.get_json(api_url + "info")
-          if k7info
-            library.version = k7info["version"]
-            library.alive = true
-          elsif !k5info
-            t = Processes.get_text(base_url)
-              if t
-                vv = t.match(/version: (.*), /)
-                if vv
-                  library.version = vv[1]
-                  library.alive = true
-                end
-              end
-          end
-        elsif k5info
-          library.version = k5info["version"]
-          library.alive = true
-        end
-
-        library.save
-        if last_alive != library.alive || State.where(library: library).count == 0
-          value = library.alive ? 1 : 0
-          puts "#{Time.now}: updating state of #{library.name} to #{value}"
-          library.update(last_state_switch: Time.now)
-          State.create(library: library, at: Time.now, value: value)
-        end
+        Processes.check_state_of(library)
       end
       puts "#{Time.now}: time #{(Time.now - start).to_i}"
     end
+
+    def self.check_state_of(library)
+      last_alive = library.alive
+      library.alive = false
+      base_url = library.search_url
+      api_url = base_url + "api/v5.0/"
+      api_url = library.url + "/catalogue/" if library.code == 'snk'
+      k5info = Processes.get_json(api_url + "info")
+      if !k5info || (k5info["version"] && k5info["version"].start_with?("7"))
+        api_url = base_url + "api/client/v7.0/"
+        k7info = Processes.get_json(api_url + "info")
+        if k7info
+          library.version = k7info["version"]
+          library.alive = true
+        elsif !k5info
+          t = Processes.get_text(base_url)
+            if t
+              vv = t.match(/version: (.*), /)
+              if vv
+                library.version = vv[1]
+                library.alive = true
+              end
+            end
+        end
+      elsif k5info
+        library.version = k5info["version"]
+        library.alive = true
+      end
+
+      if !!last_alive != !!library.alive || State.where(library: library).count == 0
+        value = library.alive ? 1 : 0
+        puts "#{Time.now}: updating state of #{library.name} to #{value}"
+        library.last_state_switch = Time.now
+        library.outage_warning_counter = 0 if library.alive
+        State.create(library: library, at: Time.now, value: value)
+      end
+
+      if !library.alive
+        library.outage_warning_counter += 1
+        if library.outage_warning_counter == 3
+          puts "#{Time.now}: outage warning for #{library.name}"
+          library.outage_warning_emails.split(",").each do |email|
+            puts "#{Time.now}: sending outage warning for #{library.name} to #{email}"
+            NotificationMailer.send_outage_warning(email, library).deliver_now
+          end
+        end
+      end
+
+      library.save
+
+    end
+
 
 
     private

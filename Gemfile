@@ -11,6 +11,8 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.5'
 gem "paperclip", ">= 5.2.0"
+gem 'postmark-rails'
+gem "figaro"
 
 group :doc do
     gem 'sdoc', '~> 0.4.0'
@@ -21,7 +23,6 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'groupdate'
 
 group :development, :test do
-  gem 'sqlite3'
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'

@@ -3,7 +3,7 @@ set :application, 'registr-krameriu'
 set :repo_url, 'git@github.com:moravianlibrary/registr-krameriu.git'
 set :passenger_restart_with_touch, true
 set :deploy_to, '/home/deploy/registr-krameriu'
-append :linked_files, 'config/database.yml', 'config/secrets.yml'
+append :linked_files, 'config/database.yml', 'config/secrets.yml', 'config/application.yml'
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system'
 
 namespace :deploy do
