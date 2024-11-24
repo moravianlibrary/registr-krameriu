@@ -337,8 +337,11 @@ class FeederController < ApplicationController
 
 		def get_text(url)
 			response = get_response(url)
-			if !response.nil?
-				response.body
+			status_code = response.code.to_i
+			if status_code == 200
+			  response.body
+			else
+			  nil
 			end
 		end
 
