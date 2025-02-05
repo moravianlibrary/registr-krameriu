@@ -50,7 +50,7 @@ class Processes
           if library.outage_warning_counter >= 3
             (library.outage_warning_emails || "").split(",").each do |email|
               puts "#{Time.now}: sending outage end info for #{library.name} to #{email}"
-              NotificationMailer.send_outage_end_info(email, library).deliver_now
+              # NotificationMailer.send_outage_end_info(email, library).deliver_now
             end
           end
           library.outage_warning_counter = 0
@@ -63,7 +63,7 @@ class Processes
           puts "#{Time.now}: outage warning for #{library.name}"
           (library.outage_warning_emails || "").split(",").each do |email|
             puts "#{Time.now}: sending outage warning for #{library.name} to #{email}"
-            NotificationMailer.send_outage_warning(email, library).deliver_now
+            # NotificationMailer.send_outage_warning(email, library).deliver_now
           end
         end
       end
